@@ -1,0 +1,3 @@
+[*.{mod,Mod,obn}]
+indent_style = tab
+indent_size = 2
