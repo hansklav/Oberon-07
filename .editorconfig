@@ -1,4 +1,4 @@
 [*.{mod,Mod,obn}]
+end_of_line = cr
 indent_style = tab
 indent_size = 2
-end_of_line = cr
