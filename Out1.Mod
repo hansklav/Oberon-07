@@ -7,7 +7,7 @@ MODULE Out1; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019 *)
 
 
 	Remark:
-	Out uses a Writer from module Texts to write output to the a text. This can make
+	Out uses a Writer from module Texts to write output to a text. This can make
 	writing relatively slow because the text is updated after every procedure call. This 
 	rarely is a problem, but if it is use 'Out := Out1' with Out1.immediate set to FALSE
 	by calling Out1.Immediate(FALSE).
