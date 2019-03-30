@@ -64,7 +64,8 @@ MODULE Out1; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019 *)
 	END Real;
 
 	PROCEDURE RealFix* (x: REAL; n, f: INTEGER);
-	(** Write the real x in n field positions in fixed point notation with f fraction digits. *)	BEGIN
+	(** Write the real x in n field positions in fixed point notation with f fraction digits. *)	
+	BEGIN
 		Texts.WriteRealFix(W, x, n, f);  Append
 	END RealFix;
 	
@@ -89,12 +90,12 @@ MODULE Out1; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019 *)
 		T := Oberon.Log
 	END ToLog;
 
-	PROCEDURE Immediate* (on: BOOLEAN);                                                                                  (* hk 2016 *)
+	PROCEDURE Immediate* (on: BOOLEAN);                                        (* hk 2016 *)
 	BEGIN 
 		immediate := on
 	END Immediate;
 
-	PROCEDURE SetFont* (fontName: ARRAY OF CHAR);                                                                 (* hk 2016 *)
+	PROCEDURE SetFont* (fontName: ARRAY OF CHAR);                              (* hk 2016 *)
 	(** Change the screen font, e.g. SetFont("Courier10.Fnt") or SetFont("Oberon10.Scn.Fnt") *)
 	BEGIN
 		Texts.SetFont(W, Fonts.This(fontName))
