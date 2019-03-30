@@ -1,4 +1,4 @@
 [*.{mod,Mod,obn}]
-end_of_line = cr
+end_of_line = cr      # does not seem to work always, so I reverted to CR LF, except in Random.Mod...
 indent_style = tab
 indent_size = 2
