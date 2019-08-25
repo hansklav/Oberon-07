@@ -1,5 +1,6 @@
 MODULE Print; (* IN Oberon *) (* Hans Klaver, 09-May-1999 *)
-(** To execute mark this viewer with * and middle-click Print.Me **)
+(** A self-reproducing program.
+    To execute mark this viewer with * and middle-click Print.Me **)
 	IMPORT In, Out;
 
 	PROCEDURE Me*;
@@ -14,3 +15,5 @@ MODULE Print; (* IN Oberon *) (* Hans Klaver, 09-May-1999 *)
 	END Me;
 
 END Print.Me*
+
+(Source: [The ModulaTor, 1999)](https://www.modulaware.com/mdlt/mdlt78.htm))
