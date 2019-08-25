@@ -1,6 +1,6 @@
 MODULE Print; (* IN Oberon *) (* Hans Klaver, 09-May-1999 *)
-(** A self-reproducing program.
-    To execute mark this viewer with * and middle-click Print.Me **)
+(** A self-reproducing program for the [Oberon System](https://en.wikipedia.org/wiki/Oberon_(operating_system))             **)
+(** To execute mark this viewer with * and middle-click Print.Me **)
 	IMPORT In, Out;
 
 	PROCEDURE Me*;
