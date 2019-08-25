@@ -1,5 +1,5 @@
 MODULE Print; (* IN Oberon *) (* Hans Klaver, 09-May-1999 *)
-(** A self-reproducing program for the [Oberon System](https://en.wikipedia.org/wiki/Oberon_(operating_system))             **)
+(** A self-reproducing program for the Oberon System.            **)
 (** To execute mark this viewer with * and middle-click Print.Me **)
 	IMPORT In, Out;
 
@@ -17,4 +17,4 @@ MODULE Print; (* IN Oberon *) (* Hans Klaver, 09-May-1999 *)
 END Print.Me*
 
 
-Source: [The ModulaTor, 1999)](https://www.modulaware.com/mdlt/mdlt78.htm)
+Source: The ModulaTor, 1999 (https://www.modulaware.com/mdlt/mdlt78.htm)
