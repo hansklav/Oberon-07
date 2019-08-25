@@ -85,5 +85,6 @@ MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015 *)
 		END
 	END String;
 
-BEGIN	 Texts.OpenWriter(W);	 Done := FALSE
+BEGIN	 
+	Texts.OpenWriter(W);  Done := FALSE
 END In.
