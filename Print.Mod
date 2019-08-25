@@ -16,4 +16,5 @@ MODULE Print; (* IN Oberon *) (* Hans Klaver, 09-May-1999 *)
 
 END Print.Me*
 
-(Source: [The ModulaTor, 1999)](https://www.modulaware.com/mdlt/mdlt78.htm))
+
+Source: [The ModulaTor, 1999)](https://www.modulaware.com/mdlt/mdlt78.htm)
