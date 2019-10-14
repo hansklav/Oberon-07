@@ -10,7 +10,7 @@ MODULE Random;  (* Martin Reiser 1992 / Oberon microsystems 1995 / hk 2017, 2019
 
 	VAR seed: INTEGER;  (* global variable *)
 
-	PROCEDURE Uniform*(): REAL;
+	PROCEDURE Uniform* (): REAL;
 	(* Returns a uniformly distributed floating point value between 0.0 and 1.0 *)
 		CONST a = 48271;  (* suggested by Joerg Straube: 48271 is prime, 16807 = 7^5 *)
 			m = 2147483647;  q = m DIV a;  r = m MOD a;
@@ -20,7 +20,7 @@ MODULE Random;  (* Martin Reiser 1992 / Oberon microsystems 1995 / hk 2017, 2019
 		RETURN FLT(seed) * (1.0 / FLT(m))
 	END Uniform;
 
-	PROCEDURE Exp*(mu: REAL): REAL;
+	PROCEDURE Exp* (mu: REAL): REAL;
 	(* Returns an exponentially distributed fp value with mean parameter mu *)
 	BEGIN
 		RETURN -Math.ln(Uniform()) / mu
