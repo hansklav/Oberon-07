@@ -25,7 +25,6 @@ MODULE Out; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015 *)
 	VAR
 		T: Texts.Text;	(* output text *)
 		W: Texts.Writer;
-		immediate*: BOOLEAN;
 
 	PROCEDURE Open*;
 		VAR
@@ -68,5 +67,5 @@ MODULE Out; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015 *)
 	END Ln;
 
 BEGIN
-	Texts.OpenWriter(W);  T := Oberon.Log;  immediate := FALSE
+	Texts.OpenWriter(W);  T := Oberon.Log
 END Out.
