@@ -12,3 +12,5 @@ earlier versions of Oberon System then this is indicated with (\*&nbsp;IN&nbsp;O
 [Wirth's Project Oberon page](https://inf.ethz.ch/personal/wirth/ProjectOberon/index.html)
 
 [Paul Reed's Project Oberon page](http://www.projectoberon.com/home)
+
+[Oberon Workstation on macOS](http://www.reactive-instruments.eu/index.html)
