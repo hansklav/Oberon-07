@@ -12,8 +12,9 @@ MODULE Random;  (* Martin Reiser 1992 / Oberon microsystems 1995 / hk 2017, 2019
 
 	PROCEDURE Uniform* (): REAL;
 	(* Returns a uniformly distributed floating point value between 0.0 and 1.0 *)
-		CONST a = 48271;  (* suggested by Joerg Straube: 48271 is prime, 16807 = 7^5 *)
-			m = 2147483647;  q = m DIV a;  r = m MOD a;
+		CONST a = 48271;   (* suggested by Joerg Straube: 48271 is prime, 16807 = 7^5 *)
+			m = 2147483647;  (* = 2^31 - 1 *)
+			q = m DIV a;  r = m MOD a;
 	BEGIN
 		seed := a * (seed MOD q) - r * (seed DIV q);
 		IF seed <= 0 THEN seed := seed + m END;
