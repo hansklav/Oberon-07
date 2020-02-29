@@ -1,7 +1,7 @@
 MODULE  IFS;  (* M. Reiser 1992 / hk 2017 *)
 (* Iterated Function System, p. 92 of Reiser & Wirth (1992), Programming in Oberon *)
 
-IMPORT  Random, In, Out := Out1, XYplane;
+IMPORT  Random, In, Out, XYplane;
 
 VAR
 	a1, b1, c1, d1, e1, f1, p1: REAL;   (* IFS parameters *)
