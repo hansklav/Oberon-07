@@ -17,7 +17,7 @@ MODULE Out; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015 *)
 	close this TextViewer because then all further output will be lost.
 	In that case only unloading Out (System.Free ... Out~) can redirect the
 	output stream to the System.Log. Therefore in module Out1 I added 
-	command Out.ToLog which redirects the output stream to the System.Log.
+	command Out1.ToLog which redirects the output stream to the System.Log.
 *)
 
 	IMPORT Input, Texts, Oberon, MenuViewers, TextFrames;
