@@ -5,8 +5,7 @@ MODULE XYplane (* IN V5 *);  (* M. Reiser 1992 / hk 2017, 2020 *)
 	See pages  91, 100 & 311 of Reiser & Wirth, Programming in Oberon (1992)
 *)
 
-IMPORT Out,
-	Display, MenuViewers, Oberon, TextFrames, Input;
+IMPORT Display, MenuViewers, Oberon, TextFrames, Input;
 
 CONST 
 	max = 15013;                 (* for a 753 x 638 user track monochrome bitmap of SETs *)
