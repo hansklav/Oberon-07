@@ -18,7 +18,7 @@ PROCEDURE  Draw*;	(* command marked for export *)
 VAR
 	x, y: REAL; 				(* new position *)
 	xi, eta: INTEGER;	  (* pixel coordinates of pen *)
-	rn: REAL;           (* temp value for random number *)
+	rn: REAL;           (* temporary variable for random number *)
 BEGIN
 	IF initialized THEN
 		REPEAT
