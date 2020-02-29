@@ -1,27 +1,38 @@
-MODULE Out1; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019 *)
+MODULE Out1;  (** IN V5 *)  (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019 *)
 (** 
 	Stream-oriented text output.
-	Port with later ETH additions.
+	
+	In Oberon System standard output (without Out1.Open) is to the System.Log text.
+	After Out.Open the output is to the newly opened viewer.
 
-	In Oberon System standard output (without Out.Open) is to the System.Log text.
+	The default semantics is the same as in the original 1992 version: all procedures 
+	append immediately to the end of the text stream. If desired this could be changed
+	with a call to Out1.Immediate(FALSE).
 
-
+	Use Out1.SetFont to easily change the font programmatically.
+	
 	Remark:
-	Out uses a Writer from module Texts to write output to a text. This can make
-	writing relatively slow because the text is updated after every procedure call. This 
-	rarely is a problem, but if it is use 'Out := Out1' with Out1.immediate set to FALSE
-	by calling Out1.Immediate(FALSE).
-	For best performance use the Write procedures of Texts directly.
+	In the Oberon System Out uses a Writer from module Texts to write output to a text stream. 
+	The original 1992 implementation writes the output immediately after every procedure call. 
+	This rarely is a problem and some programs depend on this behaviour of Out. 
+	Output can be made faster (at the expense of compatibility with other implementations)
+	by delaying the writing of the buffer until a call to Out.Ln; this can be achieved by calling 
+	Out1.Immediate(FALSE).
+	For best performance use the Write procedures of Texts directly, as is done in N. Wirth's books.
 
 	Problem (Oberon V5):
-	After a call to Out.Open output is to a newly opened TextViewer; don't
+	After a call to Out1.Open output is to a newly opened TextViewer; don't
 	close this TextViewer because then all further output will be lost.
 	In that case only unloading Out (System.Free ... Out~) can redirect the
-	output stream to the System.Log. Therefore in module Out1 I added 
-	command Out.ToLog which redirects the output stream to the System.Log.
+	output stream to the System.Log. Therefore I added command Out1.ToLog which 
+	redirects the output stream to the System1.Log text.
 *)
 
 	IMPORT Input, Fonts, Texts, Oberon, MenuViewers, TextFrames;
+	
+	CONST
+		name = "Out.Text";
+		menu = "System.Close System.Copy System.Grow Edit.Search Edit.Store";
 
 	VAR
 		T: Texts.Text;
@@ -33,74 +44,83 @@ MODULE Out1; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019 *)
 		IF immediate THEN Texts.Append(T, W.buf) END
 	END Append;
 
-	PROCEDURE Open*;
+	PROCEDURE Open* ;
+	(** Open a separate viewer for output *)
 		VAR
 			x, y, X, Y: INTEGER;	keys: SET;
 			menuF, mainF: TextFrames.Frame;
 			V: MenuViewers.Viewer;
 	BEGIN
-		T := TextFrames.Text("Out.Text");
-		menuF := TextFrames.NewMenu("Out.Text",
-			"System.Close System.Copy System.Grow Edit.Search Edit.Store");
+		T := TextFrames.Text(name);
+		menuF := TextFrames.NewMenu(name, menu);
 		mainF := TextFrames.NewText(T, T.len - 200);
-		Input.Mouse(keys, X, Y);																								 (* hk 2015 *)
+		Input.Mouse(keys, X, Y);																							   	   (* hk 2015 *)
 		Oberon.AllocateUserViewer(X, x, y);
 		V := MenuViewers.New(menuF, mainF, TextFrames.menuH, x, y)
 	END Open;
 
 	PROCEDURE Char* (ch: CHAR);
+	(** Write the character ch to the end of the output stream *)
 	BEGIN	 
-		Texts.Write(W, ch);  Append
+		Texts.Write(W, ch); Append
 	END Char;
 
 	PROCEDURE String* (str: ARRAY OF CHAR);
+	(** Write character string str to the end of the output stream *)
 	BEGIN
-		Texts.WriteString(W, str);  Append
+		Texts.WriteString(W, str); Append
 	END String;
 
 	PROCEDURE Real* (x: REAL; n: INTEGER);
+	(** Write the real x in n field positions *)
 	BEGIN
-		Texts.WriteReal(W, x, n);  Append
+		Texts.WriteReal(W, x, n); Append
 	END Real;
 
 	PROCEDURE RealFix* (x: REAL; n, f: INTEGER);
-	(** Write the real x in n field positions in fixed point notation with f fraction digits. *)	
+	(** Write the real x in n field positions in fixed point notation with f fraction digits *)	
 	BEGIN
-		Texts.WriteRealFix(W, x, n, f);  Append
+		Texts.WriteRealFix(W, x, n, f); Append
 	END RealFix;
 	
 	PROCEDURE Int* (i, n: INTEGER);
+	(** Write the integer i in n field positions *)
 	BEGIN
-		Texts.WriteInt(W, i, n);  Append
+		Texts.WriteInt(W, i, n); Append
 	END Int;
 
 	PROCEDURE Hex* (i: LONGINT);
-	(** Write the integer i in hexadecimal with a leading space. *)
+	(** Write the integer i in hexadecimal with a leading space *)
 	BEGIN
-		Texts.WriteHex(W, i);  Append
+		Texts.WriteHex(W, i); Append
 	END Hex;
 
 	PROCEDURE Ln*;
+	(** Write an end-of-line (CR) to the end of the buffer and then
+	    unconditionally write the buffer to the end of the output stream *)
 	BEGIN
-		Texts.WriteLn(W);  Texts.Append(T, W.buf)
+		Texts.WriteLn(W); Texts.Append(T, W.buf)
 	END Ln;
 
 	PROCEDURE ToLog*;																													 (* hk 2016 *)
+	(** Redirect the output stream to the System Log *)
 	BEGIN
 		T := Oberon.Log
 	END ToLog;
 
-	PROCEDURE Immediate* (on: BOOLEAN);                                        (* hk 2016 *)
+	PROCEDURE Immediate* (on: BOOLEAN);                                                                          (* hk 2016 *)
+	(** Only call this procedure with on = FALSE if you find the default output too slow *)                                 
 	BEGIN 
 		immediate := on
 	END Immediate;
 
-	PROCEDURE SetFont* (fontName: ARRAY OF CHAR);                              (* hk 2016 *)
+	PROCEDURE SetFont* (fontName: ARRAY OF CHAR);                                                                (* hk 2019 *)
 	(** Change the screen font, e.g. SetFont("Courier10.Fnt") or SetFont("Oberon10.Scn.Fnt") *)
 	BEGIN
 		Texts.SetFont(W, Fonts.This(fontName))
 	END SetFont;
 
 BEGIN
-	Texts.OpenWriter(W);  T := Oberon.Log;  immediate := FALSE
+	Texts.OpenWriter(W);  T := Oberon.Log;  
+	immediate := TRUE
 END Out1.
