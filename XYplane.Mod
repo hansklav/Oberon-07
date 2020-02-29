@@ -9,8 +9,8 @@ IMPORT Out,
 	Display, MenuViewers, Oberon, TextFrames, Input;
 
 CONST 
-	max = 15040;                 (* for a 753 x 638 user track monochrome bitmap, hk 2020 *)
-	maxSet = 31;                 (* in Oberon V5 each SET variable is 32 bits *)
+	max = 15013;                 (* for a 753 x 638 user track monochrome bitmap of SETs *)
+	maxSet = 31;                 (* size of SET is 32 bits *)
 	closed = 0;  displayed = 2;  (* values for the viewer state *)
 	black = Display.black;  white = Display.white;  replace = Display.replace;
 	erase* = 0;  draw* = 1;      (* values for parameter mode in Dot *)
