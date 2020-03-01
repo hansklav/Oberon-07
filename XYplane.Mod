@@ -56,7 +56,7 @@ BEGIN
 	j := 0;  WHILE j < max DO bitmap[j] := {}; INC(j) END
 END Clear;
 
-PROCEDURE Open* ;
+PROCEDURE Open*;
 VAR menuF: TextFrames.Frame;  x, y: INTEGER;
 BEGIN
 	IF V.state # displayed THEN
