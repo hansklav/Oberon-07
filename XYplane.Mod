@@ -57,10 +57,7 @@ BEGIN
 END Clear;
 
 PROCEDURE Open* ;
-VAR 
-	menuF: TextFrames.Frame;
-	x, y: INTEGER;
-(* V: MenuViewers.Viewer; *)
+VAR menuF: TextFrames.Frame;  x, y: INTEGER;
 BEGIN
 	IF V.state # displayed THEN
 (* 	Oberon.OpenTrack(Display.Left, 0);  *)
