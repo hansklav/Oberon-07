@@ -460,11 +460,9 @@ MODULE Hennessy;
    * tree search, and stops after finding a first solution. 
    * It reports 'kount' (2005), the number of piece placement trials 
    * that connect nodes.  
-   * See: Beeler, M., “Beyond the Baskett Benchmark”, Computer    
+   * See: Beeler, M., √íBeyond the Baskett Benchmark√ì, Computer    
    * Architecture News, Vol. 1, No. 1. March 1986.                
    *)
-
-
 
   PROCEDURE Fit (i, j: INTEGER): BOOLEAN;
     VAR k: INTEGER; res: BOOLEAN;
@@ -472,9 +470,7 @@ MODULE Hennessy;
     k := 0; res := TRUE;
     WHILE (k <= piecemax[i]) & (res = TRUE) DO
       IF p[i][k] THEN 
-        IF puzzl[j + k] THEN 
-          res := FALSE 
-        END
+        IF puzzl[j + k] THEN res := FALSE END
       END;
       INC(k)
     END
