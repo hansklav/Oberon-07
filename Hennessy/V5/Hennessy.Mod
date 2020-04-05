@@ -2,31 +2,31 @@ MODULE Hennessy;  (* IN V5 *)
 (*                                                                                                                     Hennessy.Do
   Also known as the Stanford Benchmark Suite.
 
-    This is a suite of benchmarks that are relatively short, both in program
-    size and execution time.  It requires no input, and prints the execution
-    time for each program, using the system-dependent routine Getclock,
-    below, to find out the current CPU time.  It does a rudimentary check to
-    make sure each program gets the right output.  These programs were
-    gathered by John Hennessy and modified by Peter Nye.
+  This is a suite of benchmarks that are relatively short, both in program
+  size and execution time.  It requires no input, and prints the execution
+  time for each program, using the system-dependent routine Getclock,
+  below, to find out the current CPU time.  It does a rudimentary check to
+  make sure each program gets the right output.  These programs were
+  gathered by John Hennessy and modified by Peter Nye.
     
-    Used in the '80s for comparison of the first (MIPS) RISC processors with 
+  Used in the '80s for comparison of the first (MIPS) RISC processors with 
   CISC processors, and still part of e.g. the LLVM test-suite.
     
-    This Oberon-07 implementation was adapted from an Oberon (1990) version
-    and a C source 'stanford.c', which can be found (March 2020) here:
-    https://classes.engineering.wustl.edu/cse465/docs/BCCExamples/stanford.c
-    https://github.com/hdantas/leon3-processor/blob/master/benchmarks/Stanford/stanford.c
-    I could not find a copy of the original Pascal source on the web.
+  This Oberon-07 implementation was adapted from an Oberon (1990) version
+  and a C source 'stanford.c', which can be found (March 2020) here:
+  https://classes.engineering.wustl.edu/cse465/docs/BCCExamples/stanford.c
+  https://github.com/hdantas/leon3-processor/blob/master/benchmarks/Stanford/stanford.c
+  I could not find a copy of the original Pascal source on the web.
     
-    * Oberon: J. Templ     26.2.90 
-    * Oberon-07: Hans Klaver   8 March 2020
-    - Made a few corrections to get reference output according to the LLVM test-suite:
-       https://github.com/microsoft/test-suite/tree/master/SingleSource/Benchmarks/Stanford
-    - Changed WHILE loops back to FOR loops where appropriate.
-    - Added the CONST 'runs'
-    - Corrected the calculation of the 'Nonfloating-point composite': divisor = 8.0
-    - Added geometric means as better summary statistics than the original 'composite' values.
-    - Some changes specific for Oberon System V5 (Kernel.Time, Out1.SetFont)
+  * Oberon: J. Templ     26.2.90 
+  * Oberon-07: Hans Klaver   8 March 2020
+  - Made a few corrections to get reference output according to the LLVM test-suite:
+    https://github.com/microsoft/test-suite/tree/master/SingleSource/Benchmarks/Stanford
+  - Changed WHILE loops back to FOR loops where appropriate.
+  - Added the CONST 'runs'
+  - Corrected the calculation of the 'Nonfloating-point composite': divisor = 8.0
+  - Added geometric means as better summary statistics than the original 'composite' values.
+  - Some changes specific for Oberon System V5 (Kernel.Time, Out1.SetFont)
 *)
 
   IMPORT 
