@@ -1,5 +1,5 @@
 MODULE Hennessy;  (* IN V5 *)                                                      
-(*                                                                                                                     Hennessy.Do
+(*                                                                                                            Hennessy.Do
   Also known as the Stanford Benchmark Suite.
 
   This is a suite of benchmarks that are relatively short, both in program
@@ -363,21 +363,21 @@ MODULE Hennessy;  (* IN V5 *)
         END
       END Try;
 
-  BEGIN
-    i := 0 - 7;
-    WHILE i <= 16 DO
-      IF (i >= 1) & (i <= 8) THEN a[i] := TRUE END;
-      IF i >= 2 THEN b[i] := TRUE END;
-      IF i <= 7 THEN c[i + 7] := TRUE END;
-      INC(i)
-    END;
-    Try(1, q, b, a, c, x);
-    IF ~ q THEN Out.String(" Error in Queens."); Out.Ln END
-  END Doit;
+    BEGIN
+      i := 0 - 7;
+      WHILE i <= 16 DO
+        IF (i >= 1) & (i <= 8) THEN a[i] := TRUE END;
+        IF i >= 2 THEN b[i] := TRUE END;
+        IF i <= 7 THEN c[i + 7] := TRUE END;
+        INC(i)
+      END;
+      Try(1, q, b, a, c, x);
+      IF ~ q THEN Out.String(" Error in Queens."); Out.Ln END
+    END Doit;
 
   BEGIN
     FOR i := 1 TO 50 DO Doit END;
-  (* Out.Int(run+1, 0); Out.Ln *)  (* reference output *)
+ (* Out.Int(run+1, 0); Out.Ln *)  (* reference output *)
   END Queens;
 
 
@@ -921,8 +921,8 @@ MODULE Hennessy;  (* IN V5 *)
       i := 1;
       REPEAT
         REPEAT
-          w[i + k].rp := z[i].rp + z[m + i].rp ;
-          w[i + k].ip := z[i].ip + z[m + i].ip ;
+          w[i + k].rp := z[i].rp + z[m + i].rp;
+          w[i + k].ip := z[i].ip + z[m + i].ip;
           w[i + j].rp := e[k + 1].rp * (z[i].rp - z[i + m].rp)
                             - e[k + 1].ip * (z[i].ip - z[i + m].ip);
           w[i + j].ip := e[k + 1].rp * (z[i].ip - z[i + m].ip)
