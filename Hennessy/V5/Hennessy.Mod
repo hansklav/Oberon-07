@@ -13,7 +13,7 @@ MODULE Hennessy;  (* IN V5 *)
   CISC processors, and still part of e.g. the LLVM test-suite.
     
     This Oberon-07 implementation was adapted from an Oberon (1990) version
-  and a C source 'stanford.c', which can be found (March 2020) here:
+    and a C source 'stanford.c', which can be found (March 2020) here:
     https://classes.engineering.wustl.edu/cse465/docs/BCCExamples/stanford.c
     https://github.com/hdantas/leon3-processor/blob/master/benchmarks/Stanford/stanford.c
     I could not find a copy of the original Pascal source on the web.
@@ -26,7 +26,7 @@ MODULE Hennessy;  (* IN V5 *)
     - Added the CONST 'runs'
     - Corrected the calculation of the 'Nonfloating-point composite': divisor = 8.0
     - Added geometric means as better summary statistics than the original 'composite' values.
-  - Some changes specific for Oberon System V5 (Kernel.Time, Out1.SetFont)
+    - Some changes specific for Oberon System V5 (Kernel.Time, Out1.SetFont)
 *)
 
   IMPORT 
@@ -153,9 +153,9 @@ MODULE Hennessy;  (* IN V5 *)
   (* System-dependent; in milliseconds *)
   BEGIN
     (* Oakwood compliant systems *)
-(*   RETURN Input.Time() * 1000 DIV Input.TimeUnit  *)
+(*  RETURN Input.Time() * 1000 DIV Input.TimeUnit  *)
     (* Oberon V5 *)
-      RETURN Kernel.Time()  (* gives milliseconds by definition *)
+    RETURN Kernel.Time()  (* gives milliseconds by definition *)
   END Getclock;
   
   PROCEDURE Initrand;
@@ -370,7 +370,7 @@ MODULE Hennessy;  (* IN V5 *)
       IF i >= 2 THEN b[i] := TRUE END;
       IF i <= 7 THEN c[i + 7] := TRUE END;
       INC(i)
-    END ;
+    END;
     Try(1, q, b, a, c, x);
     IF ~ q THEN Out.String(" Error in Queens."); Out.Ln END
   END Doit;
@@ -480,9 +480,7 @@ MODULE Hennessy;  (* IN V5 *)
     k := 0; res := TRUE;
     WHILE (k <= piecemax[i]) & (res = TRUE) DO
       IF p[i][k] THEN 
-        IF puzzl[j + k] THEN 
-          res := FALSE 
-        END
+        IF puzzl[j + k] THEN res := FALSE END
       END;
       INC(k)
     END
@@ -915,12 +913,12 @@ MODULE Hennessy;  (* IN V5 *)
   PROCEDURE Fft( n: INTEGER; VAR z, w: carray; VAR e: c2array; sqrinv: REAL);
     VAR i, j, k, l, m, index: INTEGER;
   BEGIN
-    m := n DIV 2 ;
-    l := 1 ;
+    m := n DIV 2;
+    l := 1;
     REPEAT
-      k := 0 ;
-      j := l ;
-      i := 1 ;
+      k := 0;
+      j := l;
+      i := 1;
       REPEAT
         REPEAT
           w[i + k].rp := z[i].rp + z[m + i].rp ;
