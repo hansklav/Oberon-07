@@ -188,7 +188,7 @@ MODULE Hennessy;  (* IN V5 *)
 
       PROCEDURE Swap (VAR a,b: INTEGER);
         VAR t: INTEGER;
-      BEGIN t := a;  a := b;  b := t;
+      BEGIN t := a;  a := b;  b := t
       END Swap;
 
     BEGIN
