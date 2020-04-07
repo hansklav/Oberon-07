@@ -23,7 +23,7 @@ MODULE Hennessy;
     - Made a few corrections to get reference output according to the LLVM test-suite:
       https://github.com/microsoft/test-suite/tree/master/SingleSource/Benchmarks/Stanford
     - Changed WHILE loops back to FOR loops where appropriate.
-    - Added the CONST 'repetitions'
+    - Added the CONST 'runs'
     - Corrected the calculation of the 'Nonfloating-point composite': divisor = 8.0
     - Added geometric means as better summary statistics than the original 'composite' values.
 *)
