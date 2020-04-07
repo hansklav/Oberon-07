@@ -1,5 +1,5 @@
 ### Hennessy benchmarks
-The Hennessy or Stanford Benchmark Suite is a collection of small programs that were used in the '80s by John Hennessy et al. to compare the first (MIPS) RISC processors with CISC processors.
+The Hennessy or Stanford Benchmark Suite is a collection of small programs that were used in the '80s by John Hennessy & al. to compare the first (MIPS) RISC processors with CISC processors.
 
 Originally written in Pascal they were ported to various other programming languages. Here I give two Oberon-07 implementations and a C program for easy comparison. 
 
