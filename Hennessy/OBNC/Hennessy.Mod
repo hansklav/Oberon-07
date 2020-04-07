@@ -153,7 +153,7 @@ MODULE Hennessy;
     (* Oakwood compliant systems *)
     RETURN Input.Time() * 1000 DIV Input.TimeUnit
     (* Oberon System V5 *)
-(*  RETURN Kernel.Time() *)  (* gives milliseconds by definition *)
+ (* RETURN Kernel.Time() *)  (* gives milliseconds by definition *)
   END Getclock;
   
   PROCEDURE Initrand;
@@ -163,7 +163,7 @@ MODULE Hennessy;
   PROCEDURE Rand (): INTEGER;
   BEGIN
     seed := (seed * 1309 + 13849) MOD 65536  (* use MOD 65636 to get the same output as C *)
-    RETURN (seed)                            (* in V5 use MOD 65535 to prevent a crash *)
+    RETURN seed                              (* in V5 use MOD 65535 to prevent a crash *)
   END Rand;
 
 
@@ -172,7 +172,7 @@ MODULE Hennessy;
              
   PROCEDURE Swap (VAR a,b: INTEGER);
     VAR t: INTEGER;
-  BEGIN t := a;  a := b;  b := t;
+  BEGIN t := a;  a := b;  b := t
   END Swap;
   
   PROCEDURE Initialize;
@@ -368,7 +368,7 @@ MODULE Hennessy;
     VAR i: INTEGER;
   BEGIN
     FOR i := 1 TO 50 DO Doit END;
-(*  Out.Int(run+1, 0); Out.Ln *)  (* reference output *)
+ (* Out.Int(run+1, 0); Out.Ln *)  (* reference output *)
   END Queens;
 
 
@@ -406,7 +406,7 @@ MODULE Hennessy;
         Innerproduct(imr[i][j], ima, imb, i, j)
       END
     END;
-(*  IF run < rowsize THEN
+ (* IF run < rowsize THEN
       Out.Int(imr[run + 1][run + 1], 0); Out.Ln END *)  (* reference output *)
   END Intmm;
 
@@ -445,7 +445,7 @@ MODULE Hennessy;
         rInnerproduct (rmr[i][j], rma, rmb, i, j)
       END
     END;
-(*  IF run < rowsize THEN
+ (* IF run < rowsize THEN
       Out.Real(rmr[run + 1][run + 1], 0); Out.Ln END *)  (* reference output *)
   END Mm;
 
@@ -653,7 +653,7 @@ MODULE Hennessy;
     IF ~ Trial(n) THEN Out.String("Error2 in Puzzle."); Out.Ln
     ELSIF kount # 2005 THEN Out.String("Error3 in Puzzle."); Out.Ln
     END;
-(*  Out.Int(n, 0); Out.Ln; Out.Int(kount, 0); Out.Ln *)  (* reference output *)
+ (* Out.Int(n, 0); Out.Ln; Out.Int(kount, 0); Out.Ln *)  (* reference output *)
   END Puzzle;
 
 
@@ -699,8 +699,8 @@ MODULE Hennessy;
     Quicksort(sortlist, 1, sortelements);
     IF (sortlist[1] # littlest) OR (sortlist[sortelements] # biggest) THEN
       Out.String( " Error in Quick."); Out.Ln 
-    END
-(* ;Out.Int(sortlist[run + 1], 0); Out.Ln *)  (* reference output *)
+    END;
+ (* Out.Int(sortlist[run + 1], 0); Out.Ln *)  (* reference output *)
   END Quick;
 
 
@@ -739,8 +739,8 @@ MODULE Hennessy;
     END;
     IF (sortlist[1] # littlest) OR (sortlist[srtelements] # biggest) THEN 
       Out.String("Error3 in Bubble."); Out.Ln
-    END
-(* ;Out.Int(sortlist[run + 1], 0); Out.Ln *)  (* reference output *)
+    END;
+ (* Out.Int(sortlist[run + 1], 0); Out.Ln *)  (* reference output *)
   END Bubble;
 
 
@@ -808,7 +808,7 @@ MODULE Hennessy;
     FOR i := 2 TO sortelements DO
       Insert(sortlist[i], tree) 
     END;
-(*  Out.Int(sortlist[2 + run], 0); Out.Ln; *)  (* reference output *)
+ (* Out.Int(sortlist[2 + run], 0); Out.Ln; *)  (* reference output *)
     IF ~ Checktree(tree) THEN Out.String(" Error in Tree."); Out.Ln END
   END Trees;
   
@@ -944,7 +944,7 @@ MODULE Hennessy;
       z[i].ip := 20.0 * zi - 10.0
     END;
     FOR i := 1 TO 20 DO Fft(fftsize, z, w, e, 0.0625) END;
-(*  Printcomplex (z, 1, 256, 17)  *)   (* reference output *)
+ (* Printcomplex (z, 1, 256, 17)  *)   (* reference output *)
   END Oscar;
   
   
