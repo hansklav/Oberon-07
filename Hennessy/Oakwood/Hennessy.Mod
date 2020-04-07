@@ -210,7 +210,7 @@ MODULE Hennessy;
   END Perm;
 
 
-  (* Towers -- Program to solve the Towers of Hanoi for 14 discs *)
+  (* Towers -- Program to solve the three Towers of Hanoi for 14 discs *)
   
   PROCEDURE Error (emsg: ARRAY OF CHAR);
   BEGIN
