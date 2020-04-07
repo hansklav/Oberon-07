@@ -1,6 +1,6 @@
 MODULE Hennessy;  (* IN V5 *)                                                      
 (*                                                                                                                     Hennessy.Do
-  Also known as the Stanford Benchmark Suite.
+    Also known as the Stanford Benchmark Suite.
 
     This is a suite of benchmarks that are relatively short, both in program
     size and execution time.  It requires no input, and prints the execution
@@ -153,9 +153,9 @@ MODULE Hennessy;  (* IN V5 *)
   (* System-dependent; in milliseconds *)
   BEGIN
     (* Oakwood compliant systems *)
-(*   RETURN Input.Time() * 1000 DIV Input.TimeUnit  *)
+ (* RETURN Input.Time() * 1000 DIV Input.TimeUnit  *)
     (* Oberon V5 *)
-      RETURN Kernel.Time()  (* gives milliseconds by definition *)
+    RETURN Kernel.Time()  (* gives milliseconds by definition *)
   END Getclock;
   
   PROCEDURE Initrand;
