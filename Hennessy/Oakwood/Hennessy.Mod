@@ -214,7 +214,7 @@ MODULE Hennessy;
   
   PROCEDURE Error (emsg: ARRAY OF CHAR);
   BEGIN
-    Out.String(" Error in Towers: "); Out.String(emsg); Out.Ln; 
+    Out.String(" Error in Towers: "); Out.String(emsg); Out.Ln
   END Error;
 
   PROCEDURE Makenull (s: INTEGER);
