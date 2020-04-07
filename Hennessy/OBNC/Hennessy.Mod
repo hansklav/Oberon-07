@@ -499,9 +499,7 @@ MODULE Hennessy;
     VAR k: INTEGER;
   BEGIN
     FOR k := 0 TO piecemax[i] DO
-      IF p[i][k] THEN 
-        puzzl[j + k] := FALSE 
-      END
+      IF p[i][k] THEN puzzl[j + k] := FALSE END
     END;
     INC(piececount[class[i]])
   END Remove;
