@@ -475,35 +475,30 @@ MODULE Hennessy;  (* IN V5 *)
 *)
   
   PROCEDURE Fit (i, j: INTEGER): BOOLEAN;
-    VAR k: INTEGER; OK: BOOLEAN;
-  BEGIN 
-    k := 0; OK := TRUE;
-    WHILE (k <= piecemax[i]) & OK DO
-      IF p[i][k] THEN 
-        IF puzzl[j + k] THEN OK := FALSE END
-      END;
+	(* August Karlstrom, April 2020 *)
+    VAR k: INTEGER;
+  BEGIN
+    k := 0;
+    WHILE (k <= piecemax[i]) & ~(p[i, k] & puzzl[j + k]) DO
       INC(k)
     END
-    RETURN OK
+  RETURN k > piecemax[i]
   END Fit;
-
+	
   PROCEDURE Place (i, j: INTEGER): INTEGER;
-    VAR k, res: INTEGER;
-      exit: BOOLEAN;
+    VAR k: INTEGER;
   BEGIN
     FOR k := 0 TO piecemax[i] DO
       IF p[i][k] THEN puzzl[j + k] := TRUE END
     END;
     DEC(piececount[class[i]]);
-    k := j;  res := 0;  exit := FALSE;
-    WHILE (k <= size) & (~ exit) DO
-      IF ~ puzzl[k] THEN res := k; exit := TRUE
-      ELSE INC(k)
-      END
-    END
-    RETURN res
+		(* The following lines due to Jörg Straube *)
+    k := j;
+    WHILE (k <= size) & puzzl[k] DO INC(k) END;
+    IF k > size THEN k := 0 END
+    RETURN k
   END Place;
-    
+
   PROCEDURE Remove (i, j: INTEGER);
     VAR k: INTEGER;
   BEGIN
