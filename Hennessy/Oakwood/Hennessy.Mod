@@ -18,8 +18,8 @@ MODULE Hennessy;
     https://github.com/hdantas/leon3-processor/blob/master/benchmarks/Stanford/stanford.c
     I could not find a copy of the original Pascal source on the web.
     
-    * Oberon:    J. Templ     26.2.90 
-    * Oberon-07: Hans Klaver  8 March 2020
+    * Oberon: J. Templ, 26.2.90 
+    * Oberon-07: Hans Klaver, March 2020 (modifications by Jörg Straube and August Karlstrom)
     - Made a few corrections to get reference output according to the LLVM test-suite:
       https://github.com/microsoft/test-suite/tree/master/SingleSource/Benchmarks/Stanford
     - Changed WHILE loops back to FOR loops where appropriate.
@@ -465,17 +465,15 @@ MODULE Hennessy;
    * Architecture News, Vol. 1, No. 1. March 1986.                
    *)
 
-  PROCEDURE Fit (i, j: INTEGER): BOOLEAN;
-    VAR k: INTEGER; OK: BOOLEAN;
-  BEGIN 
-    k := 0; OK := TRUE;
-    WHILE (k <= piecemax[i]) & OK DO
-      IF p[i][k] THEN 
-        IF puzzl[j + k] THEN OK := FALSE END
-      END;
+(* August Karlstrom *)
+ PROCEDURE Fit (i, j: INTEGER): BOOLEAN;
+    VAR k: INTEGER;
+  BEGIN
+    k := 0;
+    WHILE (k <= piecemax[i]) & ~(p[i, k] & puzzl[j + k]) DO
       INC(k)
     END
-    RETURN OK
+  RETURN k > piecemax[i]
   END Fit;
 
   PROCEDURE Place (i, j: INTEGER): INTEGER;
@@ -486,13 +484,11 @@ MODULE Hennessy;
       IF p[i][k] THEN puzzl[j + k] := TRUE END
     END;
     DEC(piececount[class[i]]);
-    k := j;  res := 0;  exit := FALSE;
-    WHILE (k <= size) & (~ exit) DO
-      IF ~ puzzl[k] THEN res := k; exit := TRUE
-      ELSE INC(k)
-      END
-    END
-    RETURN res
+    (* The following lines due to Jörg Straube *)
+    k := j;
+    WHILE (k <= size) & puzzl[k] DO INC(k) END;
+    IF k > size THEN k := 0 END
+    RETURN k
   END Place;
   
   PROCEDURE Remove (i, j: INTEGER);
