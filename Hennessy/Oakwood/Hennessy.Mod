@@ -465,8 +465,8 @@ MODULE Hennessy;
    * Architecture News, Vol. 1, No. 1. March 1986.                
    *)
 
-(* August Karlstrom *)
  PROCEDURE Fit (i, j: INTEGER): BOOLEAN;
+ (* August Karlstrom *)
     VAR k: INTEGER;
   BEGIN
     k := 0;
