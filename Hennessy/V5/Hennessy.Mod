@@ -18,8 +18,8 @@ MODULE Hennessy;  (* IN V5 *)
     https://github.com/hdantas/leon3-processor/blob/master/benchmarks/Stanford/stanford.c
     I could not find a copy of the original Pascal source on the web.
     
-    * Oberon: J. Templ     26.2.90 
-    * Oberon-07: Hans Klaver   8 March 2020
+    * Oberon: J. Templ, 26.2.90 
+    * Oberon-07: Hans Klaver, March 2020 (modifications by Jörg Straube and August Karlstrom)
     - Made a few corrections to get reference output according to the LLVM test-suite:
        https://github.com/microsoft/test-suite/tree/master/SingleSource/Benchmarks/Stanford
     - Changed WHILE loops back to FOR loops where appropriate.
