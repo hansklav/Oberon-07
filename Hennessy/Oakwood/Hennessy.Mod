@@ -163,7 +163,7 @@ MODULE Hennessy;
   
   PROCEDURE Rand (): INTEGER;
   BEGIN
-    seed := (seed * 1309 + 13849) MOD 65536  (* use MOD 65636 to get the same output as C *)
+    seed := (seed * 1309 + 13849) MOD 65536  (* use MOD 65536 to get the same output as C *)
     RETURN seed                         (* in V5 use MOD 65535 to prevent a crash in Tree *)
   END Rand;
 
