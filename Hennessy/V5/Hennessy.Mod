@@ -19,7 +19,7 @@ MODULE Hennessy;  (* IN V5 *)
     I could not find a copy of the original Pascal source on the web.
     
     * Oberon: J. Templ, 26.2.90 
-    * Oberon-07: Hans Klaver, March 2020 (modifications by Jörg Straube and August Karlstrom)
+    * Oberon-07: Hans Klaver, March 2020 (modifications by Jörg Straube, August Karlstrom and Chris Burrows)
     - Made a few corrections to get reference output according to the LLVM test-suite:
        https://github.com/microsoft/test-suite/tree/master/SingleSource/Benchmarks/Stanford
     - Changed WHILE loops back to FOR loops where appropriate.
@@ -475,13 +475,13 @@ MODULE Hennessy;  (* IN V5 *)
 *)
   
   PROCEDURE Fit (i, j: INTEGER): BOOLEAN;
-	(* August Karlstrom, April 2020 *)
+	(* August Karlstrom, Chris Burrows. April 2020 *)
     VAR k: INTEGER;
   BEGIN
-    k := 0;
-    WHILE (k <= piecemax[i]) & ~(p[i, k] & puzzl[j + k]) DO
+    k := -1;
+    REPEAT
       INC(k)
-    END
+    UNTIL (k > piecemax[i]) OR p[i, k] & puzzl[j + k]
   RETURN k > piecemax[i]
   END Fit;
 	
