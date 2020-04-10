@@ -473,7 +473,7 @@ MODULE Hennessy;
     REPEAT
       INC(k)
     UNTIL (k > piecemax[i]) OR p[i, k] & puzzl[j + k]
-  RETURN k > piecemax[i]
+    RETURN k > piecemax[i]
   END Fit;
 	
   PROCEDURE Place (i, j: INTEGER): INTEGER;
