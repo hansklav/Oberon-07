@@ -30,8 +30,9 @@ MODULE Hennessy;  (* IN V5 *)
 *)
 
   IMPORT 
-    Kernel,  (* for Kernel.Time; in Oakwood compliant systems use Input.Time instead *)
-    Out := Out1,  (* for Out1.SetFont in Do *)
+    Kernel,      (* for Kernel.Time; in Oakwood compliant systems use Input.Time instead *)
+		Oberon,      (* for Oberon.Collect in Trees *)
+    Out := Out1, (* for Out1.SetFont in Do *)
     Math;
 
   CONST
@@ -164,8 +165,8 @@ MODULE Hennessy;  (* IN V5 *)
   
   PROCEDURE Rand (): INTEGER;
   BEGIN
-    seed := (seed * 1309 + 13849) MOD 65535 (* with 65536 (to produce the same output as C ) Oberon V5 crashes in Tree, *)
-    RETURN seed                (* so in V5 reference output of Intmm, Mm, Quick, Bubble and Tree will not be correct *)
+    seed := (seed * 1309 + 13849) MOD 65535 (* sic! 65535 to produce the same output as C *)
+    RETURN seed
   END Rand;
 
 
@@ -808,14 +809,18 @@ MODULE Hennessy;  (* IN V5 *)
   PROCEDURE Trees (run: INTEGER);
     VAR i: INTEGER;
   BEGIN
-    tInitarr;
-    NEW(tree);
-    tree.left := NIL; tree.right := NIL; tree.val := sortlist[1];
-    FOR i := 2 TO sortelements DO
-      Insert(sortlist[i], tree) 
+	  (* The IF and last line (thanks to Joerg Straube) are necessary to prevent heap overflow *)
+		IF Kernel.heapLim - Kernel.heapOrg - Kernel.allocated > 160000 THEN 
+      tInitarr;
+      NEW(tree);
+      tree.left := NIL; tree.right := NIL; tree.val := sortlist[1];
+      FOR i := 2 TO sortelements DO
+        Insert(sortlist[i], tree) 
+      END;
+      IF ~ Checktree(tree) THEN Out.String(" Error in Tree."); Out.Ln END;
     END;
-    IF ~ Checktree(tree) THEN Out.String(" Error in Tree."); Out.Ln END
-  (* ; Out.Int(sortlist[2 + run], 0); Out.Ln *)  (* reference output *)
+		tree := NIL; Oberon.Collect(0);  (* (JS) tell the GC to start after Hennessy terminated *)
+ (* Out.Int(sortlist[2 + run], 0); Out.Ln *)  (* reference output *)
   END Trees;
   
   
