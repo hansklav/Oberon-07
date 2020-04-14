@@ -1,5 +1,5 @@
 MODULE Hennessy;  (* IN V5 *)                                                      
-(*                                                                                                                     Hennessy.Do
+(*                                                                                                              Hennessy.Do
     Also known as the Stanford Benchmark Suite.
 
     This is a suite of benchmarks that are relatively short, both in program
@@ -23,7 +23,7 @@ MODULE Hennessy;  (* IN V5 *)
     - Made a few corrections to get reference output according to the LLVM test-suite:
        https://github.com/microsoft/test-suite/tree/master/SingleSource/Benchmarks/Stanford
     - Changed WHILE loops back to FOR loops where appropriate.
-    - Added the CONST 'runs'
+    - Added the CONST 'runs' and 'm'
     - Added an extra 'reference output' to the Tree benchmark (procedure Trees)
     - Corrected the calculation of the 'Nonfloating-point composite': divisor = 8.0
     - Added geometric means as better summary statistics than the original 'composite' values.
@@ -43,7 +43,7 @@ MODULE Hennessy;  (* IN V5 *)
 		
 		m = 65535; (* modulus for Rand; generates a different list of random numbers than the C version *)
 		runs = 7;  (* with m = 65535 the V5 heap by chance can handle at least 7 runs of Tree in a row, 
-		              but running time comparisons of Tree are not fairly possible *)
+		              but fair running time comparisons of Tree are not possible *)
 
     bubblebase = 1.61;  (* weighing factors for the 'composite' summary values *)
     permbase = 1.75;
@@ -172,7 +172,7 @@ MODULE Hennessy;  (* IN V5 *)
   
   PROCEDURE Rand (): INTEGER;
   BEGIN
-    seed := (seed * 1309 + 13849) MOD 65535  (* use MOD 65536 to get the same output as C *)
+    seed := (seed * 1309 + 13849) MOD m  (* see above for two versions of constant m *)
     RETURN seed
   END Rand;
 
