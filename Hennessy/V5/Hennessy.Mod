@@ -31,19 +31,19 @@ MODULE Hennessy;  (* IN V5 *)
 *)
 
   IMPORT 
-    Kernel,      (* i.a. for Kernel.Time; in Oakwood compliant systems use Input.Time instead *)
-		Oberon,      (* for Oberon.Collect in Trees *)
-    Out := Out1, (* for Out1.SetFont in Do *)
+    Kernel,       (* i.a. for Kernel.Time; in Oakwood compliant systems use Input.Time instead *)
+		Oberon,       (* for Oberon.Collect in Trees *)
+    Out := Out1,  (* for Out1.SetFont in Do *)
     Math;
 
   CONST
     (* Rand, Time, Do *)
-		m = 65536; (* modulus for Rand; generates the same list of random numbers as the C version *)
-    runs = 2;  (* with m = 65536 the V5 heap can handle at most 2 runs of Tree in a row *)
+		m = 65536;    (* modulus for Rand; generates the same list of random numbers as the C version *)
+    runs = 2;     (* with m = 65536 the V5 heap can handle at most 2 runs of Tree in a row *)
 		
-		m = 65535; (* modulus for Rand; generates a different list of random numbers than the C version *)
-		runs = 7;  (* with m = 65535 the V5 heap by chance can handle at least 7 runs of Tree in a row, 
-		              but fair running time comparisons of Tree are not possible *)
+ (* m = 65535;    (* modulus for Rand; generates a different list of random numbers than the C version *)
+		runs = 7; *)  (* with m = 65535 the V5 heap by chance can handle at least 7 runs of Tree in a row, 
+		                 but fair running time comparisons of Tree are not possible *)
 
     bubblebase = 1.61;  (* weighing factors for the 'composite' summary values *)
     permbase = 1.75;
