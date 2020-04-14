@@ -24,10 +24,10 @@ MODULE Hennessy;  (* IN V5 *)
        https://github.com/microsoft/test-suite/tree/master/SingleSource/Benchmarks/Stanford
     - Changed WHILE loops back to FOR loops where appropriate.
     - Added the CONST 'runs' and 'm'
-    - Added an extra 'reference output' to the Tree benchmark (procedure Trees)
+    - Added a conditional clause and an extra 'reference output' to the Tree benchmark (procedure Trees)
     - Corrected the calculation of the 'Nonfloating-point composite': divisor = 8.0
     - Added geometric means as better summary statistics than the original 'composite' values.
-    - Some changes specific for Oberon System V5 (Kernel.Time, Out1.SetFont)
+    - Some more changes specific for Oberon System V5 (Kernel.Time, Out1.SetFont)
 *)
 
   IMPORT 
