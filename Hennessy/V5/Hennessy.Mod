@@ -37,8 +37,13 @@ MODULE Hennessy;  (* IN V5 *)
     Math;
 
   CONST
-    (* Time & Do *)
-    runs = 10; 
+    (* Rand, Time, Do *)
+		m = 65536; (* modulus for Rand; generates the same list of random numbers as the C version *)
+    runs = 2;  (* with m = 65536 the V5 heap can handle at most 2 runs of Tree in a row *)
+		
+		m = 65535; (* modulus for Rand; generates a different list of random numbers than the C version *)
+		runs = 7;  (* with m = 65535 the V5 heap by chance can handle at least 7 runs of Tree in a row, 
+		              but running time comparisons of Tree are not fairly possible *)
 
     bubblebase = 1.61;  (* weighing factors for the 'composite' summary values *)
     permbase = 1.75;
@@ -811,7 +816,7 @@ MODULE Hennessy;  (* IN V5 *)
   PROCEDURE Trees (run: INTEGER);
     VAR i: INTEGER;
   BEGIN
-	  (* The IF and last line (thanks to Joerg Straube) are necessary to prevent heap overflow *)
+	  (* The IF clause and last line (thanks to Joerg Straube) are necessary to prevent heap overflow *)
 		IF Kernel.heapLim - Kernel.heapOrg - Kernel.allocated > 160000 THEN 
       tInitarr;
       NEW(tree);
@@ -820,11 +825,11 @@ MODULE Hennessy;  (* IN V5 *)
         Insert(sortlist[i], tree) 
       END;
       IF ~ Checktree(tree) THEN Out.String(" Error in Tree."); Out.Ln 
-   (* ELSE INC(treeRuns); Out.Ln; OutInt(treeRuns, 2) *)  (* reference output A *)
+   (* ELSE INC(treeRuns); Out.Ln; OutInt(treeRuns, 2) *)  (* reference output A; asserts calls of Checktree *)
 			END;
     END;
 		tree := NIL; Oberon.Collect(0);  (* (JS) tell the GC to start after Hennessy terminated *)
- (* Out.Int(sortlist[2 + run], 7); Out.Ln *)  (* reference output B *)
+ (* Out.Int(sortlist[2 + run], 7); Out.Ln *)  (* reference output B; only asserts correct initialization *)
   END Trees;
   
   
