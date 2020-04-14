@@ -24,6 +24,7 @@ MODULE Hennessy;
       https://github.com/microsoft/test-suite/tree/master/SingleSource/Benchmarks/Stanford
     - Changed WHILE loops back to FOR loops where appropriate.
     - Added the CONST 'runs'
+		- Added an extra 'reference output' to the Tree benchmark (procedure Trees)
     - Corrected the calculation of the 'Nonfloating-point composite': divisor = 8.0
     - Added geometric means as better summary statistics than the original 'composite' values.
 *)
