@@ -119,6 +119,7 @@ MODULE Hennessy;  (* IN V5 *)
 
     (* Tree *)
     tree: node;
+		treeRuns: INTEGER;
 
     (* Towers *)
     stack: ARRAY stackrange + 1 OF INTEGER;
@@ -817,10 +818,12 @@ MODULE Hennessy;  (* IN V5 *)
       FOR i := 2 TO sortelements DO
         Insert(sortlist[i], tree) 
       END;
-      IF ~ Checktree(tree) THEN Out.String(" Error in Tree."); Out.Ln END;
+      IF ~ Checktree(tree) THEN Out.String(" Error in Tree."); Out.Ln 
+   (* ELSE INC(treeRuns); Out.Ln; OutInt(treeRuns, 2); *)  (* reference output A *)
+			END;
     END;
 		tree := NIL; Oberon.Collect(0);  (* (JS) tell the GC to start after Hennessy terminated *)
- (* Out.Int(sortlist[2 + run], 0); Out.Ln *)  (* reference output *)
+ (* Out.Int(sortlist[2 + run], 0); Out.Ln *)  (* reference output B *)
   END Trees;
   
   
