@@ -31,7 +31,7 @@ MODULE Hennessy;  (* IN V5 *)
 *)
 
   IMPORT 
-    Kernel,      (* for Kernel.Time; in Oakwood compliant systems use Input.Time instead *)
+    Kernel,      (* i.a. for Kernel.Time; in Oakwood compliant systems use Input.Time instead *)
 		Oberon,      (* for Oberon.Collect in Trees *)
     Out := Out1, (* for Out1.SetFont in Do *)
     Math;
