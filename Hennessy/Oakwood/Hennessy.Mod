@@ -117,6 +117,7 @@ MODULE Hennessy;
 
     (* Tree *)
     tree: node;
+		treeRuns: INTEGER;
 
     (* Towers *)
     stack: ARRAY stackrange + 1 OF INTEGER;
@@ -805,8 +806,10 @@ MODULE Hennessy;
     FOR i := 2 TO sortelements DO
       Insert(sortlist[i], tree) 
     END;
- (* Out.Int(sortlist[2 + run], 0); Out.Ln; *)  (* reference output *)
-    IF ~ Checktree(tree) THEN Out.String(" Error in Tree."); Out.Ln END
+    IF ~ Checktree(tree) THEN Out.String(" Error in Tree."); Out.Ln 
+ (* ELSE INC(treeRuns); Out.Ln; OutInt(treeRuns, 3) *)  (* reference output A *)
+		END;
+ (* Out.Int(sortlist[2 + run], 7); Out.Ln *)  (* reference output B *)
   END Trees;
   
   
