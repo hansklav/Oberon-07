@@ -825,11 +825,11 @@ MODULE Hennessy;  (* IN V5 *)
         Insert(sortlist[i], tree) 
       END;
       IF ~ Checktree(tree) THEN Out.String(" Error in Tree."); Out.Ln 
-   (* ELSE INC(treeRuns); Out.Ln; OutInt(treeRuns, 2) *)  (* reference output A; asserts calls of Checktree *)
+   (* ELSE INC(treeRuns); Out.Ln; OutInt(treeRuns, 2) *)  (* reference output A; shows calls of Checktree *)
 			END;
     END;
 		tree := NIL; Oberon.Collect(0);  (* (JS) tell the GC to start after Hennessy terminated *)
- (* Out.Int(sortlist[2 + run], 7); Out.Ln *)  (* reference output B; only asserts correct initialization *)
+ (* Out.Int(sortlist[2 + run], 7); Out.Ln *)  (* reference output B; only shows correct initialization *)
   END Trees;
   
   
