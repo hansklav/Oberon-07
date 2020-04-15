@@ -9,4 +9,4 @@ Other implementations in C can be found here:
 - https://classes.engineering.wustl.edu/cse465/docs/BCCExamples/stanford.c
 - https://github.com/microsoft/test-suite/tree/master/SingleSource/Benchmarks/Stanford
 
-The second site (part of the LLVM test-suite) also provides *reference output values* to ensure the right semantics of an implementation.
+The second site (part of the LLVM test-suite) also provides *reference output values* to ensure the right semantics of an implementation. The Oberon-07 programs produce the same reference output values, ensuring a fair comparison.
