@@ -42,7 +42,7 @@ MODULE Hennessy;  (* IN V5 *)
     runs = 2;     (* with m = 65536 the V5 heap can handle at most 2 runs of Tree in a row *)
 		
  (* m = 65535;    (* modulus for Rand; generates a different list of random numbers than the C version *)
-		runs = 7; *)  (* with m = 65535 the V5 heap by chance can handle at least 7 runs of Tree in a row, 
+		runs = 7; *)  (* with m = 65535 the V5 heap by chance can handle at least 7 runs of Tree in a row 
 		                 Note: for fair running time comparisons between systems use the same modulus m ! *)
 
     bubblebase = 1.61;  (* weighing factors for the 'composite' summary values *)
