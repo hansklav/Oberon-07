@@ -183,7 +183,7 @@ MODULE Hennessy;
     VAR i: INTEGER;
   BEGIN 
     FOR i := 1 TO 7 DO
-      permarray[i] := i - 1; 
+      permarray[i] := i - 1
     END
   END Initialize;
   
