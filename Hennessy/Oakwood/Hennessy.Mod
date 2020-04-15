@@ -170,8 +170,8 @@ MODULE Hennessy;
   END Rand;
 
 
-  (* Perm -- Permutation program, heavily recursive, written by Denny Brown. *)
-  (*         Performs nearly 86600 permutations with the 7 digits 0-6.       *)
+  (* Perm -- Permutation program, heavily recursive, written by Denny Brown      *)
+  (*         Uses nearly 86600 calls of Permute for permutations of 7 digits 0-6 *)
 
              
   PROCEDURE Swap (VAR a,b: INTEGER);
