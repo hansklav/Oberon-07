@@ -171,7 +171,8 @@ MODULE Hennessy;
 
 
   (* Perm -- Permutation program, heavily recursive, written by Denny Brown. *)
-  (*         Computes all permutations of one through seven.                 *)
+  (*         Performs nearly 86600 permutations with the 7 digits 0-6.       *)
+
              
   PROCEDURE Swap (VAR a,b: INTEGER);
     VAR t: INTEGER;
