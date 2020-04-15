@@ -809,9 +809,9 @@ MODULE Hennessy;
       Insert(sortlist[i], tree) 
     END;
     IF ~ Checktree(tree) THEN Out.String(" Error in Tree."); Out.Ln 
- (* ELSE INC(treeRuns); Out.Ln; OutInt(treeRuns, 3) *)  (* reference output A; checks calls of Checktree *)
+ (* ELSE INC(treeRuns); Out.Ln; OutInt(treeRuns, 3) *)  (* reference output A; shows calls of Checktree *)
 		END;
- (* Out.Int(sortlist[2 + run], 7); Out.Ln *)  (* reference output B; only checks correct initialization *)
+ (* Out.Int(sortlist[2 + run], 7); Out.Ln *)  (* reference output B; only shows correct initialization *)
   END Trees;
   
   
