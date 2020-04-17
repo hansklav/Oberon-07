@@ -39,11 +39,11 @@ MODULE Hennessy;	 (* IN V5 *)
 	CONST
 		(* Rand, Time, Do *)
 		m = 65536;        (* modulus for Rand; generates the same list of random numbers as the C version *)
-		runs = 2;            (* with m = 65536 the V5 heap can handle at most 2 runs of Tree in a row *)
+		runs = 2;         (* with m = 65536 the V5 heap can handle at most 2 runs of Tree in a row *)
 		
 	(* m = 65535;       (* modulus for Rand; generates a different list of random numbers than the C version *)
-		runs = 7;    *)    (* with m = 65535 the V5 heap by chance can handle at least 7 runs of Tree in a row 
-                                      Note: for fair running time comparisons between systems use the same modulus m ! *)
+		runs = 7;   *)    (* with m = 65535 the V5 heap by chance can handle at least 7 runs of Tree in a row 
+                          Note: for fair running time comparisons between systems use the same modulus m ! *)
 
 		bubblebase = 1.61;	(* weighing factors for the 'composite' summary values *)
 		permbase = 1.75;
@@ -164,7 +164,7 @@ MODULE Hennessy;	 (* IN V5 *)
 	(* System-dependent; in milliseconds *)
 	BEGIN
 		(* Oakwood compliant systems *)
-	(* RETURN Input.Time() * 1000 DIV Input.TimeUnit *)
+ (* RETURN Input.Time() * 1000 DIV Input.TimeUnit *)
 		(* Oberon V5 *)
 		RETURN Kernel.Time()	(* gives milliseconds by definition *)
 	END Getclock;
@@ -331,11 +331,11 @@ MODULE Hennessy;	 (* IN V5 *)
 		type
 			 doubleboard =	 2..16;
 			 doublenorm  =	 -7..7;
-			 boardrange   =	 1..8;
-			 aarray           =	 array [boardrange] of boolean;
-			 barray           =	 array [doubleboard] of boolean;
-			 carray           =	 array [doublenorm] of boolean;
-			 xarray           =	 array [boardrange] of boardrange;
+			 boardrange  =	 1..8;
+			 aarray      =	 array [boardrange] of boolean;
+			 barray      =	 array [doubleboard] of boolean;
+			 carray      =	 array [doublenorm] of boolean;
+			 xarray      =	 array [boardrange] of boardrange;
 	*)
 
 	PROCEDURE Queens (run: INTEGER);
