@@ -25,7 +25,7 @@ MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015 *)
 			V: Viewers.Viewer;
 	BEGIN
 		Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos);	Texts.Scan(S);
-		IF (S.class = Texts.Char) & (S.c = "^") OR (S.c = "@") THEN
+		IF (S.class = Texts.Char) & ((S.c = "^") OR (S.c = "@")) THEN
 			(* start input stream at beginning of selection, ^ for filenames, @ otherwise *)
 			Oberon.GetSelection(T, beg, end, time);
 			IF time >= 0 THEN	 Texts.OpenScanner(S, T, beg);	Done := ~S.eot;
