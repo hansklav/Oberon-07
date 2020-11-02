@@ -14,3 +14,5 @@ earlier versions of Oberon System then this is indicated with (\*&nbsp;IN&nbsp;O
 [Paul Reed's Project Oberon page](http://www.projectoberon.com/home)
 
 [Oberon Workstation on macOS](http://www.reactive-instruments.eu/index.html)
+
+[VISUAL: simulations in Oberon, web-based](https://visual.sfu-kras.ru/about)
