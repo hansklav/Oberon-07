@@ -1,6 +1,6 @@
 MODULE Out1;  (** IN V5 *)  (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019 *)
 (** 
-	In Oberon System standard output (without Out1.Open) is to the System.Log text.
+		In Oberon System standard output (without Out1.Open) is to the System.Log text.
 	After Out1.Open the output is to Out.Text in a newly opened text viewer.
 
 	The default semantics is the same as in the original 1992 version of Out.Mod: all procedures 
@@ -20,9 +20,9 @@ MODULE Out1;  (** IN V5 *)  (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019 *)
 
 	Solutions to some small problems (Oberon V5):
 	After a call to Out.Open or Out1.Open output is to a newly opened text viewer. 
-	If you close this viewer then all further output will be lost. Then just activate 
-	command Out.Open again by middle clicking on it somewhere in a text; this will 
-	open a new TextViewer with an empty Out.Text.
+	If you close this viewer then all further output will be lost; in that case just activate 
+	command Out.Open again by middle clicking on it somewhere in a text; this will open a new 
+	TextViewer with an empty Out.Text.
 	After a call to Out.Open only unloading Out (System.Free ... Out ~ ) can interactively 
 	redirect the output stream to the System.Log text; therefore I added command Out1.ToLog 
 	which does this more easily.
