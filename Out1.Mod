@@ -1,6 +1,6 @@
 MODULE Out1;  (** IN V5 *)  (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019 *)
 (** 
-		In Oberon System standard output (without Out1.Open) is to the System.Log text.
+	In Oberon System standard output (without Out1.Open) is to the System.Log text.
 	After Out1.Open the output is to Out.Text in a newly opened text viewer.
 
 	The default semantics is the same as in the original 1992 version of Out.Mod: all procedures 
