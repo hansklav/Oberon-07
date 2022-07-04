@@ -1,9 +1,7 @@
 MODULE Out1;  (** IN V5 *)  (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019 *)
 (** 
-	Stream-oriented text output.
-	
 	In Oberon System standard output (without Out1.Open) is to the System.Log text.
-	After Out1.Open the output is to the newly opened viewer.
+	After Out1.Open the output is to Out.Text in a newly opened text viewer.
 
 	The default semantics is the same as in the original 1992 version of Out.Mod: all procedures 
 	append immediately to the end of the text stream. If desired this could be changed with
@@ -20,12 +18,15 @@ MODULE Out1;  (** IN V5 *)  (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019 *)
 	Out1.Immediate(FALSE).
 	For best performance use the Write procedures of Texts directly, as is done in N. Wirth's books.
 
-	Problem (Oberon V5):
-	After a call to Out.Open or Out1.Open output is to a newly opened TextViewer; 
-	don't close this TextViewer because then all further output will be lost.
-	In that case only unloading Out (System.Free ... Out ~ ) can redirect the
-	output stream to the System.Log. Therefore I added command Out1.ToLog which 
-	redirects the output stream to the System.Log text.
+	Solutions to some small problems (Oberon V5):
+	After a call to Out.Open or Out1.Open output is to a newly opened text viewer. 
+	If you close this viewer then all further output will be lost. Then just activate 
+	command Out.Open again by middle clicking on it somewhere in a text; this will 
+	open a new TextViewer with an empty Out.Text.
+	After a call to Out.Open only unloading Out (System.Free ... Out ~ ) can interactively 
+	redirect the output stream to the System.Log text; therefore I added command Out1.ToLog 
+	which does this more easily.
+
 *)
 
 	IMPORT Input, Fonts, Texts, Oberon, MenuViewers, TextFrames;
