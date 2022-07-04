@@ -13,11 +13,13 @@ MODULE Out; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015 *)
 	For best performance use the Write procedures of Texts directly.
 
 	Problem (Oberon V5):
-	After a call to Out.Open output is to a newly opened TextViewer; don't
-	close this TextViewer because then all further output will be lost.
-	In that case only unloading Out (System.Free ... Out~) can redirect the
-	output stream to the System.Log. Therefore in module Out1 I added 
-	command Out1.ToLog which redirects the output stream to the System.Log.
+	After a call to Out.Open output is to a newly opened TextViewer.
+	If you close this viewer then all further output will be lost; in that case just 
+	activate command Out.Open again by middle clicking on it somewhere in a text; this 
+	will open a new TextViewer with an empty Out.Text.
+	After a call to Out.Open only unloading Out (System.Free ... Out ~ ) can interactively 
+	redirect the output stream to the System.Log text; therefore in module Out1 I added 
+	command Out1.ToLog which does this more easily.
 *)
 
 	IMPORT Input, Texts, Oberon, MenuViewers, TextFrames;
