@@ -68,22 +68,34 @@ MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015 *)
 	BEGIN	 
 		IF Done THEN	Texts.Scan(S);	nme := S.s;	 Done := (S.class = Texts.Name)	 END
 	END Name;
-
-	PROCEDURE String* (VAR str: ARRAY OF CHAR);
-	(* Read blank delimited character sequence *)
-		CONST	 CR = 0DX;	NUL = 0X;
-		VAR	 ch: CHAR;	j: LONGINT;
-	BEGIN			
+	
+	PROCEDURE String* (VAR str: ARRAY OF CHAR);                                                               (* hk 2021 *)
+	(** Read character sequence delimited by double quotes or blanks. 
+         A quote-delimited string must not contain characters less
+         than blank such as EOL or TAB.
+ 	*)
+		CONST  NUL = 0X;  TAB = 9X;  CR = 0DX;  QUOT = 22X;
+		VAR  ch: CHAR;  j: LONGINT;
+	BEGIN
 		IF Done THEN
-			REPEAT	Char(ch)	UNTIL ((ch # " ") & (ch # CR)) OR ~Done;
+			REPEAT  Char(ch)	UNTIL ((ch # " ") & (ch # TAB) & (ch # CR)) OR ~Done;
 			j := 0;
-			WHILE Done & (ch # " ") & (ch # CR) DO
-				IF j < LEN(str) - 1 THEN str[j] := ch;	INC(j)	END;
-				Char(ch)
+			IF ch = QUOT THEN
+				Char(ch);
+				WHILE Done & (ch # QUOT) DO
+					IF j < LEN(str) - 1 THEN str[j] := ch;  INC(j) END;
+					Char(ch)
+				END
+			ELSE
+				WHILE Done & (ch # " ") & (ch # CR) DO
+					IF j < LEN(str) - 1 THEN str[j] := ch;  INC(j) END;
+					Char(ch)
+				END
 			END;
-			str[j] := NUL;	Done := j # 0
+			str[j] := NUL;  Done := j # 0
 		END
 	END String;
+
 
 BEGIN	 
 	Texts.OpenWriter(W);  Done := FALSE
