@@ -1,4 +1,4 @@
-MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015 *)
+MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015, 2022 *)
 (** 
 	Stream-oriented input from a text 
 	From: M. Reiser & N. Wirth, Programming in Oberon. Addison-Wesley, 1992.
@@ -69,10 +69,11 @@ MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015 *)
 		IF Done THEN	Texts.Scan(S);	nme := S.s;	 Done := (S.class = Texts.Name)	 END
 	END Name;
 	
-	PROCEDURE String* (VAR str: ARRAY OF CHAR);                                                               (* hk 2021 *)
-	(** Read character sequence delimited by double quotes or blanks. 
-         A quote-delimited string must not contain characters less
-         than blank such as EOL or TAB.
+	PROCEDURE String* (VAR str: ARRAY OF CHAR);                                                               (* hk 2022 *)
+	(** 
+		Read character sequence delimited by double quotes or blanks.
+		A quote-delimited string must not contain characters less
+		than blank such as EOL or TAB.
  	*)
 		CONST  NUL = 0X;  TAB = 9X;  CR = 0DX;  QUOT = 22X;
 		VAR  ch: CHAR;  j: LONGINT;
