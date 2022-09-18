@@ -6,14 +6,15 @@ MODULE Out; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015 *)
 	In Oberon System standard output (without Out.Open) is to the System.Log text.
 
 	Remark:
-	Out uses a Writer from module Texts to write output to a text. This can make
-	writing relatively slow because the text is updated after every procedure call. This 
-	rarely is a problem, but if it is use 'Out := Out1' with Out1.immediate set to FALSE
-	by calling Out1.Immediate(FALSE).
-	For best performance use the Write procedures of Texts directly.
+	In Oberon System module Out uses a Writer from module Texts to write output to a text. 
+	Because Texts.Append(T, W.buf) updates the text immediately after every procedure call
+	sometimes this makes writing relatively slow. This rarely is a problem, but if it is 
+	then use 'IMPORT Out := Out1' and call Out.Immediate(FALSE); see my module Out1.
+	For best performance use the Write procedures of module Texts directly, as Wirth shows 
+	in his 'Programming, A Tutorial', https://people.inf.ethz.ch/wirth/Oberon/PIO.pdf
 
-	Problem (Oberon V5):
-	After a call to Out.Open output is to a newly opened TextViewer.
+	Problem:
+	In Oberon System after a call to Out.Open output is to a newly opened TextViewer 'Out.Text'.
 	If you close this viewer then all further output will be lost; in that case just 
 	activate command Out.Open again by middle clicking on it somewhere in a text; this 
 	will open a new TextViewer with an empty Out.Text.
