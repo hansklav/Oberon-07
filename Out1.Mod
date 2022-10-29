@@ -5,7 +5,7 @@ MODULE Out1;  (** IN V5 *)  (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019 *)
 
 	The default semantics is the same as in the original 1992 version of Out.Mod: all procedures 
 	append immediately to the end of the text stream. If desired this could be changed with
-	a call to Out1.Immediate(FALSE).
+	a call to Out1.Immediate(FALSE), but then don't forget a terminating Out1.Ln.
 
 	Use Out1.SetFont to easily change the font programmatically.
 	
