@@ -1,5 +1,5 @@
 MODULE Math;	 (*Standard functions;	NW 12.10.2013*)
-(* hk 10 Aug. 2022	(pi, e & arctan added) *)
+(* hk 10 Aug. 2022	(32-bit version; pi, e & arctan added) *)
 
 	IMPORT Out;
 
