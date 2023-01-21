@@ -1,4 +1,4 @@
-MODULE TestArctan;
+MODULE TestArctan; (* in V5 *)  (* hk 21-1-2023 *)
 (* Test for the arctan(x) function (see Math.Mod in this repository). 
 	Verify the results here: https://www.gigacalculator.com/calculators/arctan-calculator.php 
 	Texts1.Mod is in https://github.com/hansklav/Oberon-REAL-IO
