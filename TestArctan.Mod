@@ -12,7 +12,7 @@ MODULE TestArctan;
 	BEGIN 
 		Texts.SetFont(W, Fonts.This("Courier10.Fnt"));
 		Texts.WriteString(W, "          x      arctan(x)");  Texts.WriteLn(W);
-		lim := Math.pi / 2.0; 
+		lim := Math.pi / 2.0;  
 		x := 0.0;  rad := Math.arctan(x);
 		WHILE (rad <= lim) & (x <= 1.0E20) DO
 			Texts1.WriteRealFix(W, x, 15, 3);  Texts1.WriteRealFix(W, rad, 10, 6); 
