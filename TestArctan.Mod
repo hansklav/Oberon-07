@@ -8,7 +8,7 @@ MODULE TestArctan; (* in V5 *)  (* hk 21-1-2023 *)
 	VAR W: Texts.Writer;
 
 	PROCEDURE Do*; 
-		VAR c52, x, rad, lim: REAL;  T: Texts.Text;
+		VAR x, rad, lim: REAL;  T: Texts.Text;
 	BEGIN 
 		Texts.SetFont(W, Fonts.This("Courier10.Fnt"));
 		Texts.WriteString(W, "          x      arctan(x)");  Texts.WriteLn(W);
