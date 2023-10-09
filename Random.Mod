@@ -1,4 +1,4 @@
-MODULE Random;  (* Martin Reiser 1992 / Oberon microsystems 1995 / hk 2017, 2019 *)
+MODULE Random;  (* Martin Reiser 1992 / Oberon microsystems 1995 / hk 2017, 2019, 2023 *)
 (*
 	Random Number Functions.
 	Uses the multiplicative linear congruential algorithm by D.H. Lehmer, modified by Schrage.
@@ -10,40 +10,47 @@ MODULE Random;  (* Martin Reiser 1992 / Oberon microsystems 1995 / hk 2017, 2019
 
 	VAR seed: INTEGER;  (* global variable *)
 
-	PROCEDURE Uniform* (): REAL;
-	(* Returns a uniformly distributed floating point value between 0.0 and 1.0 *)
-		CONST a = 48271;   (* suggested by Joerg Straube: 48271 is prime, 16807 = 7^5 *)
-			m = 2147483647;  (* = 2^31 - 1 *)
+	PROCEDURE Uniform*( ): REAL;
+	(* Returns a uniformly distributed floating point value in the half open interval [0.0 and 1.0) *)
+		CONST a = 48271;  (* suggested by Joerg Straube: 48271 is prime, 16807 = 7^5 *)
+			m = 2147483647;  (* 2^31 - 1 *)
 			q = m DIV a;  r = m MOD a;
 	BEGIN
 		seed := a * (seed MOD q) - r * (seed DIV q);
-		IF seed <= 0 THEN seed := seed + m END;
+		IF seed <= 0 THEN seed := seed + m END
 		RETURN FLT(seed) * (1.0 / FLT(m))
 	END Uniform;
 
-	PROCEDURE Exp* (mu: REAL): REAL;
+	PROCEDURE Exp*(mu: REAL): REAL;
 	(* Returns an exponentially distributed fp value with mean parameter mu *)
 	BEGIN
 		RETURN -Math.ln(Uniform()) / mu
 	END Exp;
 
-	PROCEDURE Int* (max: INTEGER): INTEGER;   (* hk 2017 *)
-	(* Returns a random integer value between 0 and max, inclusive *)
+	PROCEDURE Range* (length: INTEGER): INTEGER;   (* hk 2023 *)
+	(* Returns a random integer in the range 0 to length - 1 *)
 	BEGIN
-		RETURN FLOOR(FLT(max + 1) * Uniform() )
-	END Int;
+		RETURN FLOOR(FLT(length) * Uniform() )
+	END Range;
 
-	PROCEDURE Range* (min, max: INTEGER): INTEGER;   (* hk 2017 *)
-	(* Returns a random integer in the closed interval [min, max] *)
+	PROCEDURE Int* (min, max: INTEGER): INTEGER;   (* hk 2023 *)
+	(* Returns a random integer between min and max, inclusive *)
 		VAR rn: INTEGER;
 	BEGIN
 		IF max <= min THEN
-			Out.String("Invalid parameters in Random.Range"); Out.Ln
+			Out.String("Invalid parameters in Random.Int"); Out.Ln
 		ELSE
-			rn := min + Int(max - min)
-		END;
-		RETURN rn
-	END Range;
+			rn := min + Range(max - min + 1)
+		END
+	RETURN rn
+	END Int;
+
+	PROCEDURE InitSeed* (s: INTEGER);  (* hk 2023 *)
+	(* If you initialize with the same seed s before calling one of the above functions
+	   then the same random number sequence will be produced repeatedly *)
+	BEGIN
+		IF s = 0 THEN seed := 1 ELSE seed := s END
+	END InitSeed;
 
 	PROCEDURE Randomize*;   (* hk 2017 *)
 	BEGIN
