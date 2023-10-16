@@ -20,8 +20,7 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2022
 	command Out.ToLog which redirects the output stream to the System.Log.
 *)
 
-	IMPORT SYSTEM,  (* only for IntHex *)
-		Input, Fonts, Texts, Oberon, MenuViewers, TextFrames;
+	IMPORT Input, Fonts, Texts, Oberon, MenuViewers, TextFrames;
 
 	CONST
 		ordA = ORD("A");  ord0 = ORD("0");
@@ -120,17 +119,7 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2022
 	PROCEDURE IntHex* (x: INTEGER);
 	(** Write integer x in hexadecimal *)
 		VAR dig, i, n: INTEGER;  a: ARRAY 32 OF CHAR;
-	BEGIN 
-(*	
-		i := 0;  n := SYSTEM.SIZE(INTEGER) * 2;  (* 2 hex digits per byte *)
-		REPEAT
-			dig := x MOD 16;
-			IF dig < 10 THEN a[i] := CHR(dig + ord0) ELSE a[i] := CHR(dig - 10 + ordA) END;
-			x := x DIV 16; INC(i)
-		UNTIL x = 0;
-		REPEAT Texts.Write(W, "0"); DEC(n) UNTIL n <= i ;
-		REPEAT DEC(i); Texts.Write(W, a[i]) UNTIL i = 0;
-*)
+	BEGIN
 		Texts.WriteHex(W, x);  Texts.Write(W, "H");
 		Append
 	END IntHex;
