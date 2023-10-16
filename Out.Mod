@@ -162,3 +162,28 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2022
 BEGIN
 	Texts.OpenWriter(W);  T := Oberon.Log;  immediate := TRUE
 END Out.
+
+
+MODULE TestOut;
+	IMPORT Out;
+
+	PROCEDURE Do*;
+		CONST tab = 9X;
+		VAR i: INTEGER;  ch: CHAR;
+	BEGIN
+		Out.SetFont("Courier10.Fnt");
+		FOR i := 0 TO 255 DO 
+			Out.Hex(i); Out.Char(tab);`
+			Out.ByteHex(i, TRUE); Out.Char(tab); 
+			Out.IntHex(i);  Out.Char(tab);
+			Out.CharHex(CHR(i)); Out.Char(tab);
+			Out.Char(CHR(i)); Out.Ln
+		END;
+		Out.SetFont("Oberon10.Scn.Fnt");
+		Out.String("The End")
+	END Do;
+
+END TestOut.
+
+TestOut.Do
+Out.ToLog
