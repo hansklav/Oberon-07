@@ -1,33 +1,39 @@
-MODULE Out; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015 *)
-(**
+MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2022 *)
+(** 
 	Stream-oriented text output.
-	Port of the original 1992 version.
+	Port with later ETH additions.
 
 	In Oberon System standard output (without Out.Open) is to the System.Log text.
 
 	Remark:
-	In Oberon System module Out uses a Writer from module Texts to write output to a text. 
-	Because Texts.Append(T, W.buf) updates the text immediately after every procedure call
-	sometimes this makes writing relatively slow. This rarely is a problem, but if it is 
-	then use 'IMPORT Out := Out1' and call Out.Immediate(FALSE); see my module Out1.
-	For best performance use the Write procedures of module Texts directly, as Wirth shows 
-	in his 'Programming, A Tutorial', https://people.inf.ethz.ch/wirth/Oberon/PIO.pdf
+	Out uses a Writer from module Texts to write output to a text. This can make
+	writing relatively slow because the text is updated after every procedure call. This 
+	rarely is a problem, but if it is use 'Out := Out' with Out.immediate set to FALSE
+	by calling Out.Immediate(FALSE).
+	For best performance use the Write procedures of Texts directly.
 
-	Problem:
-	In Oberon System after a call to Out.Open output is to a newly opened TextViewer 'Out.Text'.
-	If you close this viewer then all further output will be lost; in that case just 
-	activate command Out.Open again by middle clicking on it somewhere in a text; this 
-	will open a new TextViewer with an empty Out.Text.
-	After a call to Out.Open only unloading Out (System.Free ... Out ~ ) can interactively 
-	redirect the output stream to the System.Log text; therefore in module Out1 I added 
-	command Out1.ToLog which does this more easily.
+	Problem (Oberon V5):
+	After a call to Out.Open output is to a newly opened TextViewer; don't
+	close this TextViewer because then all further output will be lost.
+	In that case only unloading Out (System.Free ... Out~) can redirect the
+	output stream to the System.Log. Therefore in module Out I added 
+	command Out.ToLog which redirects the output stream to the System.Log.
 *)
 
-	IMPORT Input, Texts, Oberon, MenuViewers, TextFrames;
+	IMPORT SYSTEM,  (* only for IntHex *)
+		Input, Fonts, Texts, Oberon, MenuViewers, TextFrames;
+
+	CONST
+		ordA = ORD("A");  ord0 = ORD("0");
 
 	VAR
-		T: Texts.Text;	(* output text *)
-		W: Texts.Writer;
+		T*: Texts.Text;  W: Texts.Writer;
+		immediate*: BOOLEAN;
+
+	PROCEDURE Append; 
+	BEGIN
+		IF immediate THEN Texts.Append(T, W.buf) END
+	END Append;
 
 	PROCEDURE Open*;
 		VAR
@@ -39,36 +45,131 @@ MODULE Out; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015 *)
 		menuF := TextFrames.NewMenu("Out.Text",
 			"System.Close System.Copy System.Grow Edit.Search Edit.Store");
 		mainF := TextFrames.NewText(T, T.len - 200);
-		Input.Mouse(keys, X, Y);																								 (* hk 2015 *)
+		Input.Mouse(keys, X, Y);																				
 		Oberon.AllocateUserViewer(X, x, y);
 		V := MenuViewers.New(menuF, mainF, TextFrames.menuH, x, y)
 	END Open;
 
 	PROCEDURE Char* (ch: CHAR);
 	BEGIN	 
-		Texts.Write(W, ch);  Texts.Append(T, W.buf)
+		Texts.Write(W, ch);  Append
 	END Char;
 
 	PROCEDURE String* (str: ARRAY OF CHAR);
 	BEGIN
-		Texts.WriteString(W, str);  Texts.Append(T, W.buf)
+		Texts.WriteString(W, str);  Append
 	END String;
 
 	PROCEDURE Real* (x: REAL; n: INTEGER);
 	BEGIN
-		Texts.WriteReal(W, x, n);  Texts.Append(T, W.buf)
+		Texts.WriteReal(W, x, n);  Append
 	END Real;
+
+	PROCEDURE RealFix* (x: REAL; n, k: INTEGER);
+	(** Write the real x in fixed point notation in at least n field positions 
+		with (if possible) k digits after the decimal point. *)
+	BEGIN
+		Texts.WriteRealFix(W, x, n, k);  Append
+	END RealFix;
 	
 	PROCEDURE Int* (i, n: INTEGER);
 	BEGIN
-		Texts.WriteInt(W, i, n);  Texts.Append(T, W.buf)
+		Texts.WriteInt(W, i, n);  Append
 	END Int;
+
+	PROCEDURE Hex* (i: INTEGER);
+	(** Write the integer i in hexadecimal with a leading space. *)
+	BEGIN
+		Texts.WriteHex(W, i);  Append
+	END Hex;
+
+	PROCEDURE CharHex* (ch: CHAR);
+	(** Write character ch in hexadecimal.
+		Probably only correct for 7- or 8-bit character sets like ASCII, the first 128 code points of UTF-8, EBCDIC.
+	*)
+		VAR dig, i, x: INTEGER;  a: ARRAY 2 OF CHAR;
+	BEGIN i := 0;  x := ORD(ch);
+		REPEAT
+			dig := x MOD 16;
+			IF dig < 10 THEN a[i] := CHR(dig + ord0) ELSE a[i] := CHR(dig - 10 + ordA) END;
+			x := x DIV 16; INC(i)
+		UNTIL x = 0;
+		IF a[i-1] >= "A" THEN Texts.Write(W, "0") END;
+		REPEAT DEC(i); Texts.Write(W, a[i]) UNTIL i = 0;
+		Texts.Write(W, "X");
+		Append
+	END CharHex;
+
+	PROCEDURE ByteHex* (b: BYTE; H: BOOLEAN);
+	(** Write byte b as a two digit hexadecimal, optionally with three digits and a trailing "H" *)
+		VAR dig, i, x: INTEGER;  a: ARRAY 2 OF CHAR;
+	BEGIN i := 0;  x := b;
+		REPEAT
+			dig := x MOD 16;
+			IF dig < 10 THEN a[i] := CHR(dig + ord0) ELSE a[i] := CHR(dig - 10 + ordA) END;
+			x := x DIV 16; INC(i)
+		UNTIL x = 0;
+		IF H THEN Texts.Write(W, "0") END;
+		IF b < 16 THEN Texts.Write(W, "0") END;
+	(* IF a[i-1] >= "A" THEN Texts.Write(W, "0") END; *)
+		REPEAT DEC(i); Texts.Write(W, a[i]) UNTIL i = 0;
+		IF H THEN Texts.Write(W, "H") END;		
+		Append
+	END ByteHex;
+
+	PROCEDURE IntHex* (x: INTEGER);
+	(** Write integer x in hexadecimal *)
+		VAR dig, i, n: INTEGER;  a: ARRAY 32 OF CHAR;
+	BEGIN 
+(*	
+		i := 0;  n := SYSTEM.SIZE(INTEGER) * 2;  (* 2 hex digits per byte *)
+		REPEAT
+			dig := x MOD 16;
+			IF dig < 10 THEN a[i] := CHR(dig + ord0) ELSE a[i] := CHR(dig - 10 + ordA) END;
+			x := x DIV 16; INC(i)
+		UNTIL x = 0;
+		REPEAT Texts.Write(W, "0"); DEC(n) UNTIL n <= i ;
+		REPEAT DEC(i); Texts.Write(W, a[i]) UNTIL i = 0;
+*)
+		Texts.WriteHex(W, x);  Texts.Write(W, "H");
+		Append
+	END IntHex;
+
+	PROCEDURE RealHex* (x: REAL);
+	(** Write the raw hexadecimal representation of REAL x *)
+	BEGIN IntHex(ORD(x))
+	END RealHex;
+
+	PROCEDURE Bool* (b: BOOLEAN);
+	(** Write the Boolean value b as T or F *)
+	BEGIN 
+		IF b THEN Char("T") ELSE Char("F") END
+	END Bool;
 
 	PROCEDURE Ln*;
 	BEGIN
 		Texts.WriteLn(W);  Texts.Append(T, W.buf)
 	END Ln;
 
+	PROCEDURE ToLog*;
+	(** Redirect the output of module Out to the System.Open System.OpenLog *)
+	BEGIN
+		T := Oberon.Log
+	END ToLog;
+
+	PROCEDURE Immediate* (on: BOOLEAN);
+	(** Only call this procedure with on = FALSE if you find the default output too slow *) 
+	BEGIN
+		immediate := on
+	END Immediate;
+
+	PROCEDURE SetFont* (fontName: ARRAY OF CHAR);
+	(** Change the screen font, e.g. SetFont("Courier10.Fnt") or SetFont("Oberon10.Scn.Fnt") *)
+	BEGIN
+		Texts.SetFont(W, Fonts.This(fontName));
+		Texts.Append(T, W.buf)
+	END SetFont;
+
 BEGIN
-	Texts.OpenWriter(W);  T := Oberon.Log
+	Texts.OpenWriter(W);  T := Oberon.Log;  immediate := TRUE
 END Out.
