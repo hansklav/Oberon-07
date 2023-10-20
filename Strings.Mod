@@ -141,8 +141,8 @@ MODULE Strings;  (* Oakwood version *)
     WHILE s[i] # 0X DO
       IF ("a" <= s[i]) & (s[i] <= "z") THEN
         s[i] := CHR(ORD(s[i]) - 20H)
-      ELSIF s[i] = "" THEN s[i] := ""
-        (* ELSIF s[i] = ... THEN s[i] := ... *)
+	 (* ELSIF s[i] = "ö" THEN s[i] := "Ö"
+      ELSIF s[i] = ... THEN s[i] := ... *)
       ELSE
       END;
       INC(i)
