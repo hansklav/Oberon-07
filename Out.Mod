@@ -1,4 +1,4 @@
-MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2022 *)
+MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2023 *)
 (** 
 	Stream-oriented text output.
 	Port with later ETH additions and printf by Joerg Straube.
