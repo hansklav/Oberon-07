@@ -218,9 +218,6 @@ MODULE TestOut;
 
 		Out.SetFont("Oberon10.Scn.Fnt");
 		Out.String("The End")
-
-		Out.SetFont("Oberon10.Scn.Fnt");
-		Out.String("The End")
 	END Do;
 
 END TestOut.
