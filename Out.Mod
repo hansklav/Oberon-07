@@ -1,7 +1,7 @@
 MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2022 *)
 (** 
 	Stream-oriented text output.
-	Port with later ETH additions.
+	Port with later ETH additions and printf by Joerg Straube.
 
 	In Oberon System standard output (without Out.Open) is to the System.Log text.
 
@@ -158,6 +158,39 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2022
 		Texts.SetFont(W, Fonts.This(fontName));
 		Texts.Append(T, W.buf)
 	END SetFont;
+
+	(* https://lists.inf.ethz.ch/pipermail/oberon/2020/014666.html  (Joerg Straube) *)
+
+	PROCEDURE printf* (s: ARRAY OF CHAR; i1, i2: INTEGER; str: ARRAY OF CHAR);
+	(* supported format %[length]type, type = d, i, x or s, and escape characters \n, \t *)
+		VAR n, j, len, par, x: INTEGER; ch, nxCh: CHAR; imm: BOOLEAN;
+	BEGIN
+		imm := immediate; immediate := FALSE;
+		par := 1; n := 0; ch := s[0];
+		WHILE (ch # 0X) & (n < LEN(s)) DO
+			j := n+1; nxCh := s[j];
+			IF ch = "%" THEN 				(* handle format *)
+				len := 0;
+				WHILE ("0" <= nxCh) & (nxCh <= "9") DO len := len * 10 + ORD(nxCh) - ORD("0"); INC(j); nxCh := s[j] END;
+				IF nxCh = "s" THEN String(str); INC(j)
+				ELSIF (nxCh # "d") & (nxCh # "i") & (nxCh # "x") THEN Char("%")
+				ELSE
+					x := i2; IF par = 1 THEN x := i1 END; INC(par);
+					IF nxCh = "x" THEN Hex(x) ELSE (* i, d *) Int(x, len) END;
+					INC(j)
+				END
+			ELSIF ch = "\" THEN			(* handle escape characters *)
+				IF nxCh = "n" THEN Ln; INC(j)
+				ELSIF nxCh = "t" THEN Char(9X); INC(j)
+				ELSE Char("\")
+				END
+			ELSE
+				Char(ch)
+			END;
+			n := j; ch := s[n]
+		END;
+		immediate := imm
+	END printf;
 
 BEGIN
 	Texts.OpenWriter(W);  T := Oberon.Log;  immediate := TRUE
