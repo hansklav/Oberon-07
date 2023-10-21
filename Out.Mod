@@ -211,7 +211,14 @@ MODULE TestOut;
 			Out.IntHex(i);  Out.Char(tab);
 			Out.CharHex(CHR(i)); Out.Char(tab);
 			Out.Char(CHR(i)); Out.Ln
-		END;
+		END; Out.Ln;
+
+		Out.printf("%x = %d (%s)\n", i, i, "QED");
+		Out.Hex(i); Out.String(" = "); Out.Int(i, 0); Out.String(" (QED)"); Out.Ln;
+
+		Out.SetFont("Oberon10.Scn.Fnt");
+		Out.String("The End")
+
 		Out.SetFont("Oberon10.Scn.Fnt");
 		Out.String("The End")
 	END Do;
