@@ -5,7 +5,7 @@ MODULE Random;  (* Martin Reiser 1992 / Oberon microsystems 1995 / hk 2017, 2019
 	See page 9 of Reiser & Wirth, Programming in Oberon.
 *)
 
-	IMPORT Input,  (* only for Time(); in Project Oberon 2013 use 'Input := Kernel' *)
+	IMPORT Input,  (* only for Time(); in Project Oberon 2013 use 'Input := Kernel' or 'Input := Oberon' *)
 		Out, Math;
 
 	VAR seed: INTEGER;  (* global variable *)
