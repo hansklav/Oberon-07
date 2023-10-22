@@ -1,4 +1,4 @@
-MODULE Strings;  (* Oakwood version *)
+MODULE Strings;  (* Oakwood version + Copy *)
 (**
   See: The Oakwood Guidelines for Oberon-2 Compiler Developers:
   http://www.math.bas.bg/bantchev/place/oberon/oakwood-guidelines.pdf
