@@ -7,17 +7,17 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2023
 
 	Remark:
 	Out uses a Writer from module Texts to write output to a text. This can make
-	writing relatively slow because the text is updated after every procedure call. This 
-	rarely is a problem, but if it is use 'Out := Out' with Out.immediate set to FALSE
-	by calling Out.Immediate(FALSE).
+	writing relatively slow because the text is updated immediately after every 
+	procedure call. This rarely is a problem and some programs depend on it, 
+	but if it is a problem you can call Out.Immediate(FALSE) once.
 	For best performance use the Write procedures of Texts directly.
 
 	Problem (Oberon V5):
-	After a call to Out.Open output is to a newly opened TextViewer; don't
-	close this TextViewer because then all further output will be lost.
-	In that case only unloading Out (System.Free ... Out~) can redirect the
-	output stream to the System.Log. Therefore in module Out I added 
-	command Out.ToLog which redirects the output stream to the System.Log.
+	After a call to Out.Open output is to a newly opened TextViewer;
+	don't close this TextViewer because then all further output will be lost.
+	In that case only unloading Out (System.Free ... Out~) can redirect 
+	the output stream to the System.Log. Therefore I added command Out.ToLog 
+	which redirects the output stream to the System.Log.
 *)
 
 	IMPORT Input, Fonts, Texts, Oberon, MenuViewers, TextFrames;
