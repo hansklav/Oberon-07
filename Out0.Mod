@@ -10,7 +10,7 @@ MODULE Out0; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015 *)
 	In Oberon System module Out uses a Writer from module Texts to write output to a text. 
 	Because Texts.Append(T, W.buf) updates the text immediately after every procedure call
 	sometimes this makes writing relatively slow. This rarely is a problem, but if it is 
-	then use my extende module Out.Mod and call Out.Immediate(FALSE).
+	then use my extended module Out.Mod and call Out.Immediate(FALSE).
 	For best performance use the Write procedures of module Texts directly, as Wirth shows 
 	in his 'Programming, A Tutorial', https://people.inf.ethz.ch/wirth/Oberon/PIO.pdf
 
