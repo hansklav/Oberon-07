@@ -193,12 +193,12 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2023
 				ELSIF nxCh = "t" THEN Char(9X); INC(j)
 				ELSIF nxCh = "q" THEN Char(22X); INC(j)  (* quotation mark *)
 				ELSIF ("0" <= nxCh) & (nxCh <= "9") THEN  (* hex character *)
-        			n := ORD(nxCh) - 30H; h := n; INC(j); nxCh := s[j];
+        		n := ORD(nxCh) - 30H; h := n; INC(j); nxCh := s[j];
 					WHILE ("0" <= nxCh) & (nxCh <= "9") OR ("A" <= nxCh) & (nxCh <= "F") DO
 						IF nxCh <= "9" THEN d := ORD(nxCh) - 30H ELSE d := ORD(nxCh) - 37H END;
 						n := 10*n + d; h := 10H*h + d; INC(j); nxCh := s[j]
 					END;
-        			IF nxCh = "X" THEN Char(CHR(h)); INC(j) END
+        	IF nxCh = "X" THEN Char(CHR(h)); INC(j) END
 				ELSE Char("\")
 				END
 			ELSE
