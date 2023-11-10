@@ -210,10 +210,6 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2023
 		Append                 (* hk  Oct 2023, to prevent partial output with more than one \n *)
 	END printf;
 
-
-	
-
-
 BEGIN
 	Texts.OpenWriter(W);  T := Oberon.Log;  immediate := TRUE
 END Out.
