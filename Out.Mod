@@ -9,8 +9,8 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2023
 	In Oberon System module Out uses a Writer from module Texts to write output to a text. 
 	Because Texts.Append(T, W.buf) updates the text immediately after every procedure call
 	sometimes this makes writing relatively slow. This rarely is a problem, and some modules
-  might depend on this semantics, but if it is a problem call Out.Immediate(FALSE) once to
-  speed up the output.
+  might depend on this semantics, but if it is a problem call Out.SetImmediate(FALSE) once
+	and conclude your output with Out.Ln to make it faster.
 	For best performance use the Write procedures of module Texts directly, as Wirth shows 
 	in his 'Programming, A Tutorial', https://people.inf.ethz.ch/wirth/Oberon/PIO.pdf
 
@@ -151,11 +151,11 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2023
 		T := Oberon.Log
 	END ToLog;
 
-	PROCEDURE Immediate* (on: BOOLEAN);
+	PROCEDURE SetImmediate* (on: BOOLEAN);
 	(** Only call this procedure with on = FALSE if you find the default output too slow *) 
 	BEGIN
 		immediate := on
-	END Immediate;
+	END SetImmediate;
 
 	PROCEDURE SetFont* (fontName: ARRAY OF CHAR);
 	(** Change the screen font, e.g. SetFont("Courier10.Fnt") or SetFont("Oberon10.Scn.Fnt") *)
@@ -167,7 +167,7 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2023
 	(* https://lists.inf.ethz.ch/pipermail/oberon/2020/014666.html  (Joerg Straube) *)
 
 	PROCEDURE printf* (s: ARRAY OF CHAR; i1, i2: INTEGER; str: ARRAY OF CHAR);
-	(* supported format %[length]type, type = d, i, x or s, and escape characters \n, \t *)
+	(* supported format %[length]type, type = d, i, x or s, and escape characters \n, \t, \q *)
 		VAR n, j, len, par, x: INTEGER; ch, nxCh: CHAR; imm: BOOLEAN;
 	BEGIN
 		imm := immediate; immediate := FALSE;
@@ -187,6 +187,7 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2023
 			ELSIF ch = "\" THEN			(* handle escape characters *)
 				IF nxCh = "n" THEN Ln; INC(j)
 				ELSIF nxCh = "t" THEN Char(9X); INC(j)
+				ELSIF nxCh = "q" THEN Char(22X); INC(j)  (* quotation mark ("). hk Oct 2023 *)
 				ELSE Char("\")
 				END
 			ELSE
@@ -194,7 +195,8 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2023
 			END;
 			n := j; ch := s[n]
 		END;
-		immediate := imm
+		immediate := imm;
+		Append          (* to prevent partial output with more than one \n. hk  Oct 2023 *)
 	END printf;
 
 BEGIN
@@ -222,7 +224,7 @@ MODULE TestOut;
 		Out.Hex(i); Out.String(" = "); Out.Int(i, 0); Out.String(" (QED)"); Out.Ln;
 
 		Out.SetFont("Oberon10.Scn.Fnt");
-		Out.String("The End")
+		Out.printf("\qOh, you can't help that,\q said the Cat:\n\qWe're all mad here. I'm mad. You're mad.\q\n", i, i, "");
 	END Do;
 
 END TestOut.
