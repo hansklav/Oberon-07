@@ -18,10 +18,10 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2023
 	In Oberon System after a call to Out.Open output is to a newly opened TextViewer 'Out.Text'.
 	If you close this viewer then all further output will be lost; in that case just 
 	activate command Out.Open again by middle clicking on it somewhere in a text; this 
-	will open a new TextViewer with an empty Out.Text.
+	will open a new TextViewer with an empty Out.Text which will receive subsequent output.
 	After a call to Out.Open only unloading Out (System.Free ... Out ~ ) can interactively
-	interactively redirect the output stream to the System.Log text. Therefore in this extended 
-  module Out I added command Out.ToLog which does this more easily.
+	redirect the output stream to the System.Log text. Therefore in this extended module Out
+  I added command Out.ToLog which does this more easily.
 *)
 
 	IMPORT Input, Fonts, Texts, Oberon, MenuViewers, TextFrames;
