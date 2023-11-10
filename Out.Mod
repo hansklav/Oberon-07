@@ -167,16 +167,20 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2023
 	(* https://lists.inf.ethz.ch/pipermail/oberon/2020/014666.html  (Joerg Straube) *)
 
 	PROCEDURE printf* (s: ARRAY OF CHAR; i1, i2: INTEGER; str: ARRAY OF CHAR);
-	(* supported format %[length]type, type = d, i, x or s, and escape characters \n, \t, \q *)
-		VAR n, j, len, par, x: INTEGER; ch, nxCh: CHAR; imm: BOOLEAN;
+	(* supported format %[length]type, type = d, i, x or s, and escape characters \n, \t ;
+		 escape characters \q and \hhX added by hk Oct 2023
+	 *)
+		VAR d, h, n, j, len, par, x: INTEGER; ch, nxCh: CHAR; imm: BOOLEAN;
 	BEGIN
 		imm := immediate; immediate := FALSE;
 		par := 1; n := 0; ch := s[0];
 		WHILE (ch # 0X) & (n < LEN(s)) DO
-			j := n+1; nxCh := s[j];
-			IF ch = "%" THEN 				(* handle format *)
+			j := n + 1; nxCh := s[j];
+			IF ch = "%" THEN           (* handle format *)
 				len := 0;
-				WHILE ("0" <= nxCh) & (nxCh <= "9") DO len := len * 10 + ORD(nxCh) - ORD("0"); INC(j); nxCh := s[j] END;
+				WHILE ("0" <= nxCh) & (nxCh <= "9") DO 
+					len := len * 10 + ORD(nxCh) - ORD("0"); INC(j); nxCh := s[j] 
+				END;
 				IF nxCh = "s" THEN String(str); INC(j)
 				ELSIF (nxCh # "d") & (nxCh # "i") & (nxCh # "x") THEN Char("%")
 				ELSE
@@ -184,10 +188,17 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2023
 					IF nxCh = "x" THEN Hex(x) ELSE (* i, d *) Int(x, len) END;
 					INC(j)
 				END
-			ELSIF ch = "\" THEN			(* handle escape characters *)
+			ELSIF ch = "\" THEN        (* handle escape characters *)
 				IF nxCh = "n" THEN Ln; INC(j)
 				ELSIF nxCh = "t" THEN Char(9X); INC(j)
-				ELSIF nxCh = "q" THEN Char(22X); INC(j)  (* quotation mark ("). hk Oct 2023 *)
+				ELSIF nxCh = "q" THEN Char(22X); INC(j)  (* quotation mark *)
+				ELSIF ("0" <= nxCh) & (nxCh <= "9") THEN  (* hex character *)
+        			n := ORD(nxCh) - 30H; h := n; INC(j); nxCh := s[j];
+					WHILE ("0" <= nxCh) & (nxCh <= "9") OR ("A" <= nxCh) & (nxCh <= "F") DO
+						IF nxCh <= "9" THEN d := ORD(nxCh) - 30H ELSE d := ORD(nxCh) - 37H END;
+						n := 10*n + d; h := 10H*h + d; INC(j); nxCh := s[j]
+					END;
+        			IF nxCh = "X" THEN Char(CHR(h)); INC(j) END
 				ELSE Char("\")
 				END
 			ELSE
@@ -196,8 +207,12 @@ MODULE Out; (** IN V5 *)	 (* Martin Reiser 1992 / ETH 2003 / hk 2015, 2019, 2023
 			n := j; ch := s[n]
 		END;
 		immediate := imm;
-		Append          (* to prevent partial output with more than one \n. hk  Oct 2023 *)
+		Append                 (* hk  Oct 2023, to prevent partial output with more than one \n *)
 	END printf;
+
+
+	
+
 
 BEGIN
 	Texts.OpenWriter(W);  T := Oberon.Log;  immediate := TRUE
@@ -225,6 +240,7 @@ MODULE TestOut;
 
 		Out.SetFont("Oberon10.Scn.Fnt");
 		Out.printf("\qOh, you can't help that,\q said the Cat:\n\qWe're all mad here. I'm mad. You're mad.\q\n", i, i, "");
+		Out.printf("\n\26X (%s)\n\t\23X\9XThe End.", i, i, "QED")
 	END Do;
 
 END TestOut.
