@@ -7,6 +7,7 @@ MODULE Strings;  (* Oakwood version + Copy *)
   This implementation inspired by the OBNC library module Strings.obn (https://miasap.se/obnc)
   
   Note: All strings MUST be 0X terminated.
+
   Procedure 'Copy' is an extension of the Oakwood version, useful since COPY is no longer predeclared
   and  s1 := s0 gives error message "illegal assignment" if LEN(s0) # LEN(s1), even if Length(s0) < LEN(s1).
 *)
