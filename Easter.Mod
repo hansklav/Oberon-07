@@ -4,7 +4,7 @@ MODULE Easter; (* IN V5 *)  (* hk  22-3-2016, 23-3-2019 *)
 	Western Christianity Easter and related days.
 *)
 
-	IMPORT In, Out := Out1;
+	IMPORT In, Out;
 
 	TYPE
 		Date = RECORD
