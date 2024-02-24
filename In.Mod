@@ -1,4 +1,4 @@
-MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015, 2022 *)
+MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015, 2022, JS 2024 *)
 (** 
 	Stream-oriented input from a text 
 	From: M. Reiser & N. Wirth, Programming in Oberon. Addison-Wesley, 1992.
@@ -34,13 +34,13 @@ MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015, 2022 *)
 		ELSIF (S.class = Texts.Char) & (S.c = "*") THEN
 			(* start input stream at beginning of text in marked viewer *)
 			V := Oberon.MarkedViewer();
-(*		IF ~Oberon.Pointer.on THEN Put("Pointer not visible");	Done := FALSE 
-			 ELS.. *)																															 (* hk 2015 *)
-			IF (V.dsc # NIL) & (V.dsc.next IS TextFrames.Frame) THEN
-				T := V.dsc.next(TextFrames.Frame).text;	 beg := 0;
-				Texts.OpenScanner(S, T, beg);	 Done := ~S.eot;
-			ELSE	Put("Marked viewer not a text viewer");	 Done := FALSE
-			END
+    	IF V = NIL THEN Put("Pointer not visible"); Done := FALSE              (* JS 2024 *)
+    	ELSIF (V # NIL) & (V.dsc # NIL) & (V.dsc.next IS TextFrames.Frame) THEN
+      	T := V.dsc.next(TextFrames.Frame).text; beg := 0;
+      T	exts.OpenScanner(S, T, beg); Done := ~S.eot;
+    	ELSE
+      	Put("Marked viewer not a text viewer"); Done := FALSE
+    	END
 		ELSE
 			(* start input stream after command name *)
 			T := Oberon.Par.text;	 beg := Oberon.Par.pos;
@@ -53,9 +53,14 @@ MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015, 2022 *)
 		IF Done THEN	ch := S.nextCh;	 Done := ~S.eot;	Texts.Read(S, S.nextCh)	 END
 	END Char;
 
-	PROCEDURE Int* (VAR i: INTEGER);
+	PROCEDURE LongInt* (VAR i: LONGINT);                                       (* JS 2024 *
 	BEGIN
 		IF Done THEN	Texts.Scan(S);	i := S.i;	 Done := (S.class = Texts.Int)	END
+	END LongInt;
+
+	PROCEDURE Int* (VAR i: INTEGER);
+	BEGIN
+		LongInt(i)
 	END Int;
 
 	PROCEDURE Real* (VAR x: REAL);
