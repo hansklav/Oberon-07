@@ -74,7 +74,7 @@ MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015, 2022, JS 2024 *)
 		IF Done THEN	Texts.Scan(S);	nme := S.s;	 Done := (S.class = Texts.Name)	 END
 	END Name;
 	
-	PROCEDURE String* (VAR str: ARRAY OF CHAR);                                                               (* hk 2022 *)
+	PROCEDURE String* (VAR str: ARRAY OF CHAR);                                (* hk 2022 *)
 	(** 
 		Read character sequence delimited by double quotes or blanks.
 		A quote-delimited string must not contain characters less
