@@ -53,7 +53,7 @@ MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015, 2022, JS 2024 *)
 		IF Done THEN	ch := S.nextCh;	 Done := ~S.eot;	Texts.Read(S, S.nextCh)	 END
 	END Char;
 
-	PROCEDURE LongInt* (VAR i: LONGINT);                                       (* JS 2024 *
+	PROCEDURE LongInt* (VAR i: LONGINT);                                       (* JS 2024 *)
 	BEGIN
 		IF Done THEN	Texts.Scan(S);	i := S.i;	 Done := (S.class = Texts.Int)	END
 	END LongInt;
