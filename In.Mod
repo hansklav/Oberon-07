@@ -37,7 +37,7 @@ MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015, 2022, JS 2024 *)
     	IF V = NIL THEN Put("Pointer not visible"); Done := FALSE              (* JS 2024 *)
     	ELSIF (V # NIL) & (V.dsc # NIL) & (V.dsc.next IS TextFrames.Frame) THEN
       	T := V.dsc.next(TextFrames.Frame).text; beg := 0;
-      T	exts.OpenScanner(S, T, beg); Done := ~S.eot;
+      	Texts.OpenScanner(S, T, beg); Done := ~S.eot;
     	ELSE
       	Put("Marked viewer not a text viewer"); Done := FALSE
     	END
