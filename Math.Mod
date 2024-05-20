@@ -24,10 +24,10 @@ MODULE Math;  (* 32-bit version *)
   RETURN y
   END ln;
 
-	PROCEDURE power* (x, b: REAL): REAL;
-	(** Returns x to the power b (x^b) *)
+	PROCEDURE power* (x, e: REAL): REAL;
+	(** Returns x to the power e (x^e) *)
 	BEGIN ASSERT(x > 0.0)
-	RETURN exp(b * ln(x))
+	RETURN exp(e * ln(x))
 	END power;
 
 	PROCEDURE log* (x, b: REAL): REAL;
