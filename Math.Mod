@@ -3,8 +3,8 @@ MODULE Math;  (* 32-bit version *)
 (* The missing arctan(x), a corrected ln(x), and some additional constants and         *)
 (* functions for convenience.                                                          *)
 (* Procedures sqrt, exp, sin and cos can be found in module Math by NW 12.10.2013      *)
-(* A corrected version of ln is in my repository Oberon-07-Math.ln                     *)
-	CONST
+
+  CONST
 		pi* = 3.14159265358979323846;
 		e* = 2.71828182845904523536;
 
