@@ -8,20 +8,24 @@ MODULE Math;  (* 32-bit version *)
 		pi* = 3.14159265358979323846;
 		e* = 2.71828182845904523536;
 
-  PROCEDURE ln* (x: REAL): REAL;  (* hk  18 May 2024 *)
+ PROCEDURE ln* (x: REAL): REAL;  (* hk 18.5.2024 / jr 22.5.2024 *)
+  (** Returns the natural (base e) logarithm of x *)
+  (* ln(x) = 2*arctanh( (x-1)/(x+1) )
+     around 0, arctan() is almost linear with slope 1
+  *)
     CONST
-      c1 = 0.70710678;  (* 1/ sqrt(2) *)
-      c2 = 0.69314718;  (* ln(2) *)
+      c1 = 1.4142135;  (* sqrt(2) *)
+      c2 = 0.6931472;  (* ln(2) *)
       c3 = 0.89554059;
       c4 = 1.82984424;
       c5 = 1.65677798;
-    VAR e: INTEGER; y: REAL;
-  BEGIN ASSERT(x > 0.0); UNPK(x, e);
-    y := x * 0.5; INC(e);
-    IF y < c1 THEN y := 2.0*y; DEC(e) END;
-    y := (y-1.0)/(y+1.0);
-    y := c2*FLT(e) + y*(c3 + c4/(c5 - y*y))
-  RETURN y
+    VAR e: INTEGER;
+  BEGIN
+    ASSERT(x > 0.0); UNPK(x, e);            (* x in 1 .. 2 *)
+    IF x > c1 THEN x := x*0.5; INC(e) END;  (* x in 0.7 .. 1.4) *)
+    x := (x - 1.0)/(x + 1.0);               (* x in -0.17 .. 0.17 *)
+    x := FLT(e)*c2 + x*(c3 + c4/(c5 - x*x))
+  RETURN x 
   END ln;
 
 	PROCEDURE power* (x, e: REAL): REAL;
