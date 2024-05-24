@@ -11,7 +11,7 @@ MODULE Math;  (* 32-bit version *)
  PROCEDURE ln* (x: REAL): REAL;  (* hk 18.5.2024 / jr 22.5.2024 *)
   (** Returns the natural (base e) logarithm of x *)
   (* ln(x) = 2*arctanh( (x-1)/(x+1) )
-     around 0, arctan() is almost linear with slope 1
+     around 0, arctanh() is almost linear with slope 1
   *)
     CONST
       c1 = 1.4142135;  (* sqrt(2) *)
