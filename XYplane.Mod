@@ -1,15 +1,16 @@
-MODULE XYplane (* IN V5 *);  (* M. Reiser 1992 / hk 2017, 2020 *)
+MODULE XYplane (* IN V5 *);  (* M. Reiser 1992 / hk 2017, 2020, 2024 *)
 (** 
 	Pixel oriented graphics output on a Cartesian plane, with 
 	origin in the lower left corner. Input from the keyboard.
-	See pages  91, 100 & 311 of Reiser & Wirth, Programming in Oberon (1992)
+	See pages  91, 100 & 310 of Reiser & Wirth, Programming in Oberon (1992)
 *)
 
-IMPORT Display, MenuViewers, Oberon, TextFrames, Input;
+IMPORT
+	Display, MenuViewers, Oberon, TextFrames, Input;
 
 CONST 
-	max = 15013;                 (* for a 753 x 638 user track monochrome bitmap of SETs *)
-	maxSet = 31;                 (* size of SET is 32 bits *)
+	max = 15040;                     (* for a 753 x 638 user track monochrome bitmap, hk 2020 *)
+	maxSet = 31;                      (* in Oberon V5 each SET variable is 32 bits *)
 	closed = 0;  displayed = 2;  (* values for the viewer state *)
 	black = Display.black;  white = Display.white;  replace = Display.replace;
 	erase* = 0;  draw* = 1;      (* values for parameter mode in Dot *)
@@ -22,6 +23,7 @@ VAR
 	F: XYframe;  V: MenuViewers.Viewer;
 	bitmap: ARRAY max OF SET;
 	X*, Y*, W*, H*: INTEGER;
+	square*: INTEGER; (* use XYplane.OpenH(square) for a square canvas *)
 
 PROCEDURE Modify (F: XYframe; VAR M: MenuViewers.ModifyMsg);
 BEGIN
@@ -35,7 +37,7 @@ BEGIN
 END Modify;
 
 PROCEDURE Handle (F: Display.Frame; VAR M: Display.FrameMsg);
-BEGIN                                           (* WITH statements eliminated,  hk 2017 *)
+BEGIN                                                                                    (* WITH statements eliminated,  hk 2017 *)
 	CASE F OF XYframe:
 		CASE M OF
 			Oberon.InputMsg:
@@ -51,31 +53,54 @@ END Handle;
 PROCEDURE Clear*;
 VAR j: INTEGER;
 BEGIN 
-	Oberon.RemoveMarks(F.X, F.Y, F.W, F.H);                                    (* hk 2020 *)
+	Oberon.RemoveMarks(F.X, F.Y, F.W, F.H);                                                                          (* hk 2020 *)
 	Display.ReplConst(black, F.X, F.Y, F.X + F.W, F.Y + F.H, replace);
 	j := 0;  WHILE j < max DO bitmap[j] := {}; INC(j) END
 END Clear;
 
-PROCEDURE Open*;
-VAR menuF: TextFrames.Frame;  x, y: INTEGER;
+PROCEDURE Open* ;
+(* Opens a viewer entitled 'XY Plane' in the user track. When the star marker is visible the hight H of the viewer is set by it,
+	otherwise the whole user track is used. *)
+VAR 
+	menuF: TextFrames.Frame;
+	x, y: INTEGER;
+(* V: MenuViewers.Viewer; *)
 BEGIN
 	IF V.state # displayed THEN
 (* 	Oberon.OpenTrack(Display.Left, 0);  *)
-		Oberon.OpenTrack( 0, 0);                                                 (* hk 2017 *)
+		Oberon.OpenTrack( 0, 0);                                                                                                (* hk 2017 *)
 		menuF := TextFrames.NewMenu("XY Plane", "System.Close  XYplane.Clear  IFS.Draw");
 		NEW(F);  F.handle := Handle;
-		Oberon.AllocateUserViewer(Oberon.Par.vwr.X, x, y);                       (* hk 2017 *)
+		Oberon.AllocateUserViewer(Oberon.Par.vwr.X, x, y);                                                    (* hk 2017 *)
 		V := MenuViewers.New(menuF, F, TextFrames.menuH, x, y)
 	END;
 	Clear 
 END Open;
 
+PROCEDURE OpenH* (h: INTEGER);  (* aspect ratio: h = 478 for 4:3,  h = XYplane.square for 1:1,  h = 754 for 5:6 *)
+(* Opens a viewer entitled 'XY Plane' in the user track using hight h *)
+VAR 
+	menuF: TextFrames.Frame;
+	x, y: INTEGER;
+(* V: MenuViewers.Viewer; *)
+BEGIN
+	IF V.state # displayed THEN
+(* 	Oberon.OpenTrack(Display.Left, 0);  *)
+		Oberon.OpenTrack( 0, 0);                                                                                                (* hk 2017 *)
+		menuF := TextFrames.NewMenu("XY Plane", "System.Close  XYplane.Clear  IFS.Draw");
+		NEW(F);  F.handle := Handle;
+(*	Oberon.AllocateUserViewer(Oberon.Par.vwr.X, x, y);        *)                                         (* hk 2017 *)
+		V := MenuViewers.New(menuF, F, TextFrames.menuH, 10, h)
+	END;
+	Clear 
+END OpenH;
+
 PROCEDURE Dot* (x, y, mode: INTEGER);
 VAR k, i, j: INTEGER;
 BEGIN  (* LONG eliminated *)
 	IF (x >= F.X) & (x < F.X + F.W) & (y >= F.Y) & (y < F.Y + F.H) THEN
-		k := (*LONG*)(y)*F.W + x;  i := k DIV maxSet;  j := k MOD maxSet;        (* hk 2017 *)
-		IF mode = erase THEN       (* numeric case statement not implemented *)  (* hk 2017 *)
+		k := (*LONG*)(y)*F.W + x;  i := k DIV maxSet;  j := k MOD maxSet;                               (* hk 2017 *)
+		IF mode = erase THEN                         (* numeric case statement not implemented *)  (* hk 2017 *)
 			Display.Dot(black, x, y, replace); EXCL(bitmap[i], j)
 		ELSE
 			Display.Dot(white, x, y, replace); INCL(bitmap[i], j)
@@ -86,9 +111,9 @@ END Dot;
 PROCEDURE IsDot* (x, y: INTEGER): BOOLEAN;
 VAR k, i, j: INTEGER;
 	res: BOOLEAN;
-BEGIN                                 (* LONG eliminated, only one RETURN *)  (* hk 2017*)
+BEGIN                                                                    (* LONG eliminated, only one RETURN *)  (* hk 2017*)
 	IF (x >= F.X) & (x < F.X + F.W) & (y >= F.Y) & (y < F.Y + F.H) THEN
-		k := (*LONG*)(y)*F.W + x;  i := k DIV maxSet;  j := k MOD maxSet;         (* hk 2017*)
+		k := (*LONG*)(y)*F.W + x;  i := k DIV maxSet;  j := k MOD maxSet;                                (* hk 2017*)
 		IF j IN bitmap[i] THEN res := TRUE  ELSE res := FALSE END
 	ELSE res := FALSE
 	END
@@ -102,8 +127,7 @@ BEGIN  ch := 0X;
 	RETURN ch
 END Key;
 
-BEGIN  
-	NEW(F);  F.H := 0;  NEW(V);  V.state := closed
+BEGIN
+	NEW(F);  F.H := 0;  NEW(V);  V.state := closed;
+	square := 638 + TextFrames.menuH
 END XYplane.
-
-
