@@ -22,8 +22,8 @@ TYPE
 VAR 
 	F: XYframe;  V: MenuViewers.Viewer;
 	bitmap: ARRAY max OF SET;
-	X*, Y*, W*, H*: INTEGER;
-	square*: INTEGER; (* use XYplane.OpenH(square) for a square canvas *)
+	X*, Y*, W*, H*, UW: INTEGER;
+	ar11*, ar43*, ar65*: INTEGER; (* values for parameter h in OpenH(h): aspect ratios 1:1, 4:3, 6:5 *)
 
 PROCEDURE Modify (F: XYframe; VAR M: MenuViewers.ModifyMsg);
 BEGIN
@@ -77,19 +77,17 @@ BEGIN
 	Clear 
 END Open;
 
-PROCEDURE OpenH* (h: INTEGER);  (* aspect ratio: h = 478 for 4:3,  h = XYplane.square for 1:1,  h = 754 for 5:6 *)
-(* Opens a viewer entitled 'XY Plane' in the user track using hight h *)
+PROCEDURE OpenH* (h: INTEGER);
+(* Opens a viewer entitled 'XY Plane' in the user track using hight h.
+	 Values for parameter h: ar11, ar43, ar65 for aspect ratios: 1:1, 4:3, and 6:5 *)
 VAR 
 	menuF: TextFrames.Frame;
 	x, y: INTEGER;
-(* V: MenuViewers.Viewer; *)
 BEGIN
 	IF V.state # displayed THEN
-(* 	Oberon.OpenTrack(Display.Left, 0);  *)
 		Oberon.OpenTrack( 0, 0);                                                                                                (* hk 2017 *)
 		menuF := TextFrames.NewMenu("XY Plane", "System.Close  XYplane.Clear  IFS.Draw");
 		NEW(F);  F.handle := Handle;
-(*	Oberon.AllocateUserViewer(Oberon.Par.vwr.X, x, y);        *)                                         (* hk 2017 *)
 		V := MenuViewers.New(menuF, F, TextFrames.menuH, 10, h)
 	END;
 	Clear 
@@ -129,5 +127,8 @@ END Key;
 
 BEGIN
 	NEW(F);  F.H := 0;  NEW(V);  V.state := closed;
-	square := 638 + TextFrames.menuH
+	UW := FLOOR(0.62*FLT(Oberon.DisplayWidth(0)));  (* width of User Track *)
+	ar11 := UW + TextFrames.menuH;
+	ar43 := FLOOR(FLT(3*UW)/4.0) + TextFrames.menuH;
+	ar65 := FLOOR(FLT(5*UW)/6.0) + TextFrames.menuH;
 END XYplane.
