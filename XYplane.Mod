@@ -79,7 +79,7 @@ END Open;
 
 PROCEDURE OpenH* (h: INTEGER);
 (* Opens a viewer entitled 'XY Plane' in the user track using hight h.
-	 Values for parameter h: ar11, ar43, ar65 for aspect ratios: 1:1, 4:3, and 6:5 *)
+	 Predefined values for parameter h: ar11, ar43, ar65 for aspect ratios: 1:1, 4:3, and 6:5 *)
 VAR 
 	menuF: TextFrames.Frame;
 	x, y: INTEGER;
