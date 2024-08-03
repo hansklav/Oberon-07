@@ -28,13 +28,13 @@ MODULE Random;  (* Martin Reiser 1992 / Oberon microsystems 1995 / hk 2017, 2019
 	END Exp;
 
 	PROCEDURE Range* (length: INTEGER): INTEGER;   (* hk 2023 *)
-	(* Returns a random integer in the range 0 to length - 1 *)
+	(* Returns a random integer N such that 0 <= N <= (length - 1) *)
 	BEGIN
 		RETURN FLOOR(FLT(length) * Uniform() )
 	END Range;
 
 	PROCEDURE Int* (min, max: INTEGER): INTEGER;   (* hk 2023 *)
-	(* Returns a random integer between min and max, inclusive *)
+	(* Returns a random integer N such that min <= N <= max *)
 		VAR rn: INTEGER;
 	BEGIN
 		IF max <= min THEN
