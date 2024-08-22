@@ -1,4 +1,4 @@
-MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015, 2022, JS 2024 *)
+MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015, 2022, 2024 / JS 2024 *)
 (** 
 	Stream-oriented input from a text 
 	From: M. Reiser & N. Wirth, Programming in Oberon. Addison-Wesley, 1992.
@@ -7,7 +7,7 @@ MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015, 2022, JS 2024 *)
 	IMPORT Texts, Viewers, Oberon, TextFrames;
 
 	TYPE
-		String32 = ARRAY 32 OF CHAR;																						 (* hk 2015 *)
+		String32 = ARRAY 32 OF CHAR;																						       (* hk 2015 *)
 
 	VAR
 		T: Texts.Text;	S: Texts.Scanner;	 W: Texts.Writer;
@@ -34,10 +34,10 @@ MODULE In; (* IN V5 *)	 (* Martin Reiser 1992 / hk 2015, 2022, JS 2024 *)
 		ELSIF (S.class = Texts.Char) & (S.c = "*") THEN
 			(* start input stream at beginning of text in marked viewer *)
 			V := Oberon.MarkedViewer();
-    	IF V = NIL THEN Put("Pointer not visible"); Done := FALSE              (* JS 2024 *)
+    	IF V = NIL THEN Put("Pointer not visible"); Done := FALSE                    (* JS 2024 *)
     	ELSIF (V # NIL) & (V.dsc # NIL) & (V.dsc.next IS TextFrames.Frame) THEN
       	T := V.dsc.next(TextFrames.Frame).text; beg := 0;
-      	Texts.OpenScanner(S, T, beg); Done := ~S.eot;
+				Texts.OpenScanner(S, T, beg); Texts.Read(S, S.nextCh); Done := ~S.eot;     (* hk 2024 *)
     	ELSE
       	Put("Marked viewer not a text viewer"); Done := FALSE
     	END
