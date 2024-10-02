@@ -38,7 +38,7 @@ MODULE Random;  (* Martin Reiser 1992 / Oberon microsystems 1995 / hk 2017, 2019
 		VAR rn: INTEGER;
 	BEGIN
 		IF max <= min THEN
-			Out.String("Invalid parameters in Random.Int"); Out.Ln
+			Out.String("Invalid parameters in Random.Int"); Out.Ln
 		ELSE
 			rn := min + Range(max - min + 1)
 		END
